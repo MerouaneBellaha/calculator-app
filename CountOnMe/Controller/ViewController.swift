@@ -53,7 +53,7 @@ class ViewController: UIViewController {
             setAlerctVc(message: "Démarrez un nouveau calcul !")
             return
         }
-        textView.text = calc.reduceOperation()
+        textView.text = calc.calculResult()
     }
 
    

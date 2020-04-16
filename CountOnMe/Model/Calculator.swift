@@ -33,7 +33,7 @@ struct Calculator {
     }
     
     mutating func manageNumber(number: String) -> String {
-        if expressionHaveResult { currentOperation = ""; print(currentOperation) }
+        if expressionHaveResult { currentOperation = "" }
         currentOperation.append(number)
         return currentOperation
     }
@@ -42,106 +42,58 @@ struct Calculator {
         var added = false
         if canAddOperator {
             currentOperation.append(" \(sign) ")
-            // is sign is *   /  doMore = true
             added = true
         }
         return (currentOperation, added)
     }
     
-    private func highPrecedenceOperation(operations: [String]) -> [String] {
-        var operationsToReduce = operations
-        while operationsToReduce.containsHighPrecedenceOperation {
-            if let index = operationsToReduce.findOperatorIndice {
-            
-            let left = Int(operationsToReduce[index-1])!
-            let operand = operationsToReduce[index]
-            let right = Int(operationsToReduce[index+1])!
-            
-            let result: Int
-            switch operand {
-            case "*": result = left * right
-            case "/": result = left / right
-            default: fatalError("Unknown operator !")
-            }
-            operationsToReduce.insert(String(result), at: index)
-            operationsToReduce.removeUselessElement(around: index)
-            }
+    private func calculate(leftOperand: Int, rightOperand: Int, currentOperator: Int, in operation: [String]) -> Int? {
+        guard let leftOperand = Int(operation[leftOperand]),
+            let rightOperand = Int(operation[rightOperand])
+            else { return nil }
+        let currentOperator = operation[currentOperator]
+        
+        let result: Int
+        switch currentOperator {
+        case "*": result = leftOperand * rightOperand
+        case "/": result = leftOperand / rightOperand
+        case "+": result = leftOperand + rightOperand
+        case "-": result = leftOperand - rightOperand
+        default: fatalError("Unknown operator !")
         }
-      return operationsToReduce
+        return result
     }
     
-    
-    
-    
-    private func lowPrecedenceOperation(operations: [String]) -> [String] {
-        var operationsToReduce = operations
-        while operationsToReduce.count > 1 {
-            let left = Int(operationsToReduce[0])!
-            let operand = operationsToReduce[1]
-            let right = Int(operationsToReduce[2])!
-            
-            let result: Int
-            switch operand {
-            case "+": result = left + right
-            case "-": result = left - right
-            default: fatalError("Unknown operator !")
+    private func calculHighPrecedenceOperation(in calculation: [String]) -> [String] {
+        var currentCalculation = calculation
+        while currentCalculation.containsHighPrecedenceOperation {
+            if let index = currentCalculation.findOperatorIndice {
+                if let result = calculate(leftOperand: index-1, rightOperand: index+1, currentOperator: index, in: currentCalculation) {
+                    currentCalculation.insert(String(result), at: index)
+                    currentCalculation.removeUselessElement(around: index)
+                }
             }
-            
-            operationsToReduce = Array(operationsToReduce.dropFirst(3))
-//            operationsToReduce.removeFirst(3)   Mieux ?
-            operationsToReduce.insert(String(result), at: 0)
         }
-        return operationsToReduce
+        return currentCalculation
     }
     
-    mutating func reduceOperation() -> String {
-        var operationsToReduce = elements
-        
-        if true { operationsToReduce = highPrecedenceOperation(operations: operationsToReduce) }
-        // while  element.contains * /
-        // pour chaque element.first( * /) . index
-            // element index -1  * element index +1
-        // push element at index
-        // remove element a t index + 1 2x et index -1
-        // remove elements
-        //
-        
-        // si doMore = true : fonction au dessus ->
-        
-        // si basic = true : declence fonction du dessous ->
-        
-        // sinon / et  fonction de ce qui ya en dessous
-        
-        // Iterate over operations while an operand still here
-        if true { operationsToReduce = lowPrecedenceOperation(operations: operationsToReduce) }
-        
-        //        while operationsToReduce.count > 1 {
-        //            let left = Int(operationsToReduce[0])!
-        //            let operand = operationsToReduce[1]
-        //            let right = Int(operationsToReduce[2])!
-        //
-        //            let result: Int
-        //            switch operand {
-        //            case "+": result = left + right
-        //            case "-": result = left - right
-        //            default: fatalError("Unknown operator !")
-        //            }
-        //
-        //            operationsToReduce = Array(operationsToReduce.dropFirst(3))
-        ////            operationsToReduce.removeFirst(3)   Mieux ?
-        //            operationsToReduce.insert("\(result)", at: 0) // move outside???
-//        }
-        
-        //
-        
-        
-//        let s = NSString(format: "%.2f", f)
-        currentOperation.append(" = \(operationsToReduce.first!)")
+    private func calculLowPrecedenceOperation(in calculation: [String]) -> [String] {
+        var currentCalculation = calculation
+        while currentCalculation.count > 1 {
+            if let result = calculate(leftOperand: 0, rightOperand: 2, currentOperator: 1, in: currentCalculation) {
+                currentCalculation = Array(currentCalculation.dropFirst(3))
+                //            operationsToReduce.removeFirst(3)   Mieux ?
+                currentCalculation.insert(String(result), at: 0)
+            }
+        }
+        return currentCalculation
+    }
+    
+    mutating func calculResult() -> String {
+        var calcultation = elements
+        if calcultation.containsHighPrecedenceOperation { calcultation = calculHighPrecedenceOperation(in: calcultation) }
+        if calcultation.containsLowPrecedenceOperation { calcultation = calculLowPrecedenceOperation(in: calcultation) }
+        currentOperation.append(" = \(calcultation.first!)")
         return currentOperation
     }
 }
-
-
-//if let floatValue = Float("2,47") {
-//    print(floatValue)
-//}
