@@ -71,6 +71,8 @@ struct Calculator {
     }
     
     
+    
+    
     private func lowPrecedenceOperation(operations: [String]) -> [String] {
         var operationsToReduce = operations
         while operationsToReduce.count > 1 {
@@ -113,22 +115,26 @@ struct Calculator {
         // Iterate over operations while an operand still here
         if true { operationsToReduce = lowPrecedenceOperation(operations: operationsToReduce) }
         
-//        while operationsToReduce.count > 1 {
-//            let left = Int(operationsToReduce[0])!
-//            let operand = operationsToReduce[1]
-//            let right = Int(operationsToReduce[2])!
-//
-//            let result: Int
-//            switch operand {
-//            case "+": result = left + right
-//            case "-": result = left - right
-//            default: fatalError("Unknown operator !")
-//            }
-//
-//            operationsToReduce = Array(operationsToReduce.dropFirst(3))
-////            operationsToReduce.removeFirst(3)   Mieux ?
-//            operationsToReduce.insert("\(result)", at: 0) // move outside???
+        //        while operationsToReduce.count > 1 {
+        //            let left = Int(operationsToReduce[0])!
+        //            let operand = operationsToReduce[1]
+        //            let right = Int(operationsToReduce[2])!
+        //
+        //            let result: Int
+        //            switch operand {
+        //            case "+": result = left + right
+        //            case "-": result = left - right
+        //            default: fatalError("Unknown operator !")
+        //            }
+        //
+        //            operationsToReduce = Array(operationsToReduce.dropFirst(3))
+        ////            operationsToReduce.removeFirst(3)   Mieux ?
+        //            operationsToReduce.insert("\(result)", at: 0) // move outside???
 //        }
+        
+        //
+        
+        
 //        let s = NSString(format: "%.2f", f)
         currentOperation.append(" = \(operationsToReduce.first!)")
         return currentOperation
