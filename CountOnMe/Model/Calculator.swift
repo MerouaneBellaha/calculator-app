@@ -10,7 +10,7 @@ import Foundation
 
 protocol CalculatorDelegate {
     func getCurrentOperation(_ currentOperation: String)
-    func operatorHasBeenAdded(_ operatorAdded: Bool)
+    func handleError(with message: String)
 }
 
 struct Calculator {
@@ -28,7 +28,7 @@ struct Calculator {
     }
     
     var canAddOperator: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/" && !elements.isEmpty
+        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && !elements.isEmpty
     }
     
     var expressionHaveResult: Bool {
@@ -36,11 +36,15 @@ struct Calculator {
     }
     
     var expressionIsCorrect: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"
+        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
     }
     
     var expressionAlreadyCalculated: Bool {
         elements.contains("=")
+    }
+    
+    var canAddMinusOnFront: Bool {
+        return elements.last == "+" || elements.last == "x" || elements.last == "/" || elements.last == "" || elements.isEmpty
     }
     
     mutating func manageNumber(number: String) {
@@ -51,31 +55,20 @@ struct Calculator {
     
     mutating func manageOperator(sign: String) {
         var operatorAdded = false
+        
         if expressionHaveResult { currentOperation = "" }
-        // si operateur tous sauf moins ou "" alors je peux mettrer - et append sign ( sans espace a droite ) et
         
-        // peux mettre un - pendant le calcul devant un operand, et marche :)
-        if (elements.last == "+" || elements.last == "*" || elements.last == "/" || elements.last == "")
-            && sign == "-" {
-            print("ah")
+        if canAddMinusOnFront && sign == "-" {
             currentOperation.append(" \(sign)")
             operatorAdded = true
         }
-        
-        //
-        if elements.isEmpty && sign == "-" {
-            print("ho")
-            currentOperation.append(" \(sign)")
-            operatorAdded = true
-        }
-        
-        if canAddOperator /*&& canStartWithOperator(sign)*/  {
+        if canAddOperator {
             print(elements)
             currentOperation.append(" \(sign) ")
             operatorAdded = true
         }
         calculatorDelegate.getCurrentOperation(currentOperation)
-        calculatorDelegate.operatorHasBeenAdded(operatorAdded)
+        if !operatorAdded { calculatorDelegate.handleError(with: "Impossible d'ajouter un opérateur !") }
     }
     
     private func calculate(leftOperand: Int, rightOperand: Int, currentOperator: Int, in operation: [String]) -> Double? {
@@ -86,7 +79,7 @@ struct Calculator {
         
         let result: Double
         switch currentOperator {
-        case "*": result = leftOperand * rightOperand
+        case "x": result = leftOperand * rightOperand
         case "/": result = leftOperand / rightOperand
         case "+": result = leftOperand + rightOperand
         case "-": result = leftOperand - rightOperand
@@ -112,8 +105,8 @@ struct Calculator {
         var currentCalculation = calculation
         while currentCalculation.count > 1 {
             if let result = calculate(leftOperand: 0, rightOperand: 2, currentOperator: 1, in: currentCalculation) {
-                currentCalculation = Array(currentCalculation.dropFirst(3))
-                //            operationsToReduce.removeFirst(3)   Mieux ?
+//                currentCalculation = Array(currentCalculation.dropFirst(3))
+                currentCalculation.removeFirst(3)
                 currentCalculation.insert(String(result), at: 0)
             }
         }
@@ -121,7 +114,7 @@ struct Calculator {
     }
     
     mutating func calculResult() {
-        
+        guard controlDoability() else { return }
         var calculation = elements
         if calculation.containsHighPrecedenceOperation { calculation = calculHighPrecedenceOperation(in: calculation) }
         if calculation.containsLowPrecedenceOperation { calculation = calculLowPrecedenceOperation(in: calculation) }
@@ -131,11 +124,26 @@ struct Calculator {
     }
     
     private func formatResult(of number: String) -> String {
-        guard number != "inf" else { return "Error" }
+        guard number != "inf" else {
+            calculatorDelegate.handleError(with: "Error: Division par 0 impossible")
+            return "Error" }
         var result = String(format: "%.3f", Double(number)!)
         while result.contains(".") && (result.last == "0" || result.last == ".") {
             result.removeLast()
         }
         return result
+    }
+    
+    func controlDoability() -> Bool {
+        guard expressionIsCorrect else {
+            calculatorDelegate.handleError(with: "Un operateur est déja mis !")
+            return false
+        }
+        guard expressionHaveEnoughElement,
+            !expressionAlreadyCalculated else {
+                calculatorDelegate.handleError(with: "Démarrez un nouveau calcul !")
+                return false
+        }
+        return true
     }
 }

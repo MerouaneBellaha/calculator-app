@@ -9,9 +9,9 @@
 import Foundation
 
 extension Array {
-    /// return true if the array contains "/" or "*"
+    /// return true if the array contains "/" or "x"
     var containsHighPrecedenceOperation: Bool {
-        if self.contains(where: { $0 as? String == "/" || $0 as? String == "*" }) { return true }
+        if self.contains(where: { $0 as? String == "/" || $0 as? String == "x" }) { return true }
         return false
     }
     
@@ -20,9 +20,9 @@ extension Array {
         return false
     }
     
-    /// returns the first index of "/" or "*"
+    /// returns the first index of "/" or "x"
     var findOperatorIndice: Int? {
-        return self.firstIndex(where: { $0 as? String == "/"  || $0 as? String == "*"})
+        return self.firstIndex(where: { $0 as? String == "/"  || $0 as? String == "x"})
     }
     
     /// remove element at index+1 two times and at index-1
