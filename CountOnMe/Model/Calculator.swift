@@ -71,6 +71,11 @@ struct Calculator {
         if !operatorAdded { calculatorDelegate.handleError(with: "Impossible d'ajouter un opérateur !") }
     }
     
+    mutating func manageCleanButton() {
+        currentOperation = ""
+        calculatorDelegate.getCurrentOperation(currentOperation)
+    }
+    
     private func calculate(leftOperand: Int, rightOperand: Int, currentOperator: Int, in operation: [String]) -> Double? {
         guard let leftOperand = Double(operation[leftOperand]),
             let rightOperand = Double(operation[rightOperand])

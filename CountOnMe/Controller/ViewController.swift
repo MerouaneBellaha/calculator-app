@@ -35,6 +35,10 @@ class ViewController: UIViewController {
         calc.calculResult()
     }
     
+    @IBAction func tappedCleanButton(_ sender: UIButton) {
+        calc.manageCleanButton()
+    }
+    
     private func setAlertVc(with message: String) {
         let alertVC = UIAlertController(title: "Zéro!", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
