@@ -8,54 +8,60 @@
 
 import UIKit
 
+
 class ViewController: UIViewController {
-    
-    
+
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet var numberButtons: [UIButton]!
     
+//    var delegate: CalculatorDelegate?
     var calc = Calculator()
-    
     // View Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        calc.calculatorDelegate = self
+        
     }
     
-    private func setAlerctVc(message: String) {
+    private func setAlertVc(message: String) {
            let alertVC = UIAlertController(title: "Zéro!", message: message, preferredStyle: .alert)
            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
            self.present(alertVC, animated: true, completion: nil)
        }
     
     // View actions
-    @IBAction private func tappedNumberButton(_ sender: UIButton) { // Private ?
+    @IBAction private func tappedNumberButton(_ sender: UIButton) {
         let numberText = sender.currentTitle!
-        textView.text = calc.manageNumber(number: numberText)
+        calc.manageNumber(number: numberText)
     }
     
-    // TODO: plus et moins en fonction
-    // transformet en double ou float pour avoir des resultats coherents 
     
-    @IBAction private func tappedOperatorButton(_ sender: UIButton) { // pluriels ?
-        let values = calc.manageOperator(sign: sender.currentTitle!)
-        textView.text = values.0
-        if !values.1 { setAlerctVc(message: "Un operateur est déja mis !") }
+    @IBAction private func tappedOperatorButton(_ sender: UIButton) {
+        calc.manageOperator(sign: sender.currentTitle!)
     }
 
     @IBAction private func tappedEqualButton(_ sender: UIButton) { // erreur quand appuie une seconde fois sur =
         guard calc.expressionIsCorrect else {
-            setAlerctVc(message: "Un operateur est déja mis !")
+            setAlertVc(message: "Un operateur est déja mis !")
             return
         }
         
-        guard calc.expressionHaveEnoughElement else {
-            setAlerctVc(message: "Démarrez un nouveau calcul !")
+        guard calc.expressionHaveEnoughElement,
+            !calc.expressionAlreadyCalculated else {
+            setAlertVc(message: "Démarrez un nouveau calcul !")
             return
         }
-        textView.text = calc.calculResult()
+        calc.calculResult()
     }
 
    
+}
+
+extension ViewController: CalculatorDelegate {
+    func getCurrentOperation(_ currentOperation: String) {
+        textView.text = currentOperation
+    }
+    func operatorHasBeenAdded(_ operatorAdded: Bool) {
+        if operatorAdded == false { setAlertVc(message: "Un operateur est déja mis !") }
+    }
 }
 
