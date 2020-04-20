@@ -14,17 +14,17 @@ extension Array {
         if self.contains(where: { $0 as? String == "/" || $0 as? String == "x" }) { return true }
         return false
     }
-    
+
     var containsLowPrecedenceOperation: Bool {
         if self.contains(where: { $0 as? String == "+" || $0 as? String == "-"}) { return true }
         return false
     }
-    
+
     /// returns the first index of "/" or "x"
     var findOperatorIndice: Int? {
         return self.firstIndex(where: { $0 as? String == "/"  || $0 as? String == "x"})
     }
-    
+
     /// remove element at index+1 two times and at index-1
     mutating func removeUselessElement(around index: Int) {
         self.remove(at: index + 1)
