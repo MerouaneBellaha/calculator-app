@@ -26,16 +26,8 @@ struct Calculator {
         return elements.count >= 3
     }
 
-    private var canAddOperator: Bool {
+    private var canAddOperator: Bool { // change name to expressionIsCorrect
         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && !elements.isEmpty
-    }
-
-//    private var expressionHaveResult: Bool { // same as expressionAlreadyCalculated ?
-//        return currentOperation.firstIndex(of: "=") != nil
-//    }
-
-    private var expressionIsCorrect: Bool { // same as canAddOperator ?
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
     }
 
     private var expressionAlreadyCalculated: Bool {
@@ -49,32 +41,25 @@ struct Calculator {
     mutating func manageNumber(number: String) {
         if expressionAlreadyCalculated { currentOperation = "" }
         currentOperation.append(number)
-//        calculatorDelegate?.getCurrentOperation(currentOperation)
     }
 
-
-    // si sign = - /
     mutating func manageOperator(sign: String) {
-        var operatorAdded = false
-
         if expressionAlreadyCalculated { currentOperation = "" }
 
-        if canAddMinusOnFront && sign == "-" {
+        guard !(canAddMinusOnFront && sign == "-") else {
             currentOperation.append(" \(sign)")
-            operatorAdded = true
+            return
         }
-        if canAddOperator {
+        guard !canAddOperator else {
             print(elements)
             currentOperation.append(" \(sign) ")
-            operatorAdded = true
+            return
         }
-//        calculatorDelegate?.getCurrentOperation(currentOperation)
-        if !operatorAdded { calculatorDelegate?.handleError(with: "Impossible d'ajouter un opérateur !") }
+        calculatorDelegate?.handleError(with: "Impossible d'ajouter un opérateur !")
     }
 
     mutating func manageCleanButton() {
         currentOperation = ""
-//        calculatorDelegate?.getCurrentOperation(currentOperation)
     }
 
     private func calculate(leftOperand: Int, rightOperand: Int, currentOperator: Int, in operation: [String]) -> Double? {
@@ -102,12 +87,6 @@ struct Calculator {
                                          currentOperator: index, in: currentCalculation) else { return [] }
             currentCalculation.insert(String(result), at: index)
             currentCalculation.removeUselessElement(around: index)
-//            if let index = currentCalculation.findOperatorIndice {
-//                if let result = calculate(leftOperand: index-1, rightOperand: index+1, currentOperator: index, in: currentCalculation) {
-//                    currentCalculation.insert(String(result), at: index)
-//                    currentCalculation.removeUselessElement(around: index)
-//                }
-//            }
         }
         return currentCalculation
     }
@@ -131,7 +110,6 @@ struct Calculator {
         if calculation.containsLowPrecedenceOperation { calculation = calculLowPrecedenceOperation(in: calculation) }
         let resultFormatted = formatResult(of: calculation.first!)
         currentOperation.append(" = \(resultFormatted)")
-//        calculatorDelegate?.getCurrentOperation(currentOperation)
     }
 
     private func formatResult(of number: String) -> String {
@@ -146,7 +124,7 @@ struct Calculator {
     }
 
     private func controlDoability() -> Bool {
-        guard expressionIsCorrect else {
+        guard canAddOperator else {
             calculatorDelegate?.handleError(with: "Un operateur est déja mis !")
             return false
         }
@@ -158,3 +136,21 @@ struct Calculator {
         return true
     }
 }
+
+
+//    private var expressionHaveResult: Bool { // same as expressionAlreadyCalculated ?
+//        return currentOperation.firstIndex(of: "=") != nil
+//    }
+
+//    private var expressionIsCorrect: Bool { // same as canAddOperator ?
+//        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
+//    }
+
+
+// l.
+//            if let index = currentCalculation.findOperatorIndice {
+//                if let result = calculate(leftOperand: index-1, rightOperand: index+1, currentOperator: index, in: currentCalculation) {
+//                    currentCalculation.insert(String(result), at: index)
+//                    currentCalculation.removeUselessElement(around: index)
+//                }
+//            }
