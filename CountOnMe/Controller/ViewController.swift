@@ -29,12 +29,16 @@ class ViewController: UIViewController {
         operationManager.manageOperator(sender.currentTitle!)
     }
 
-    @IBAction func tappedCleanButton(_ sender: UIButton) {
-        operationManager.manageCleanButton()
+    @IBAction func tappedClearButton(_ sender: UIButton) {
+        operationManager.manageClear()
     }
 
     @IBAction private func tappedEqualButton(_ sender: UIButton) {
         operationManager.calculResult()
+    }
+
+    @IBAction func tappedDecimalButton(_ sender: UIButton) {
+        operationManager.manageDecimal()
     }
 
     private func setAlertVc(with message: String) {

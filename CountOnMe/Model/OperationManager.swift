@@ -39,7 +39,7 @@ struct OperationManager {
     }
 
     private var canAddMinusInFront: Bool {
-        return elements.last == "+" || elements.last == "x" || elements.last == "/" || elements.last == "" || elements.isEmpty
+        return elements.last == "+" || elements.last == "x" || elements.last == "/" || elements.last == "" || elements.isEmpty // les deux derniers font la mm chose ?
     }
 
     mutating func manageNumber(_ number: String) {
@@ -62,8 +62,16 @@ struct OperationManager {
         delegate?.didFailWithError(message: "Impossible d'ajouter un opérateur !")
     }
 
-    mutating func manageCleanButton() {
+    mutating func manageClear() {
         currentOperation = ""
+    }
+
+    mutating func manageDecimal() {
+        guard expressionIsCorrect && !(elements.last?.contains(".") ?? false) && !expressionAlreadyCalculated else {
+            delegate?.didFailWithError(message: "Impossible d'ajouter un point !")
+            return
+        }
+        currentOperation.append(".")
     }
 
     private func calculate(leftOperand: Int, rightOperand: Int, currentOperator: Int, in operation: [String]) -> Double? {

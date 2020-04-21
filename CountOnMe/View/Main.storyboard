@@ -153,12 +153,16 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="jNC-ZE-KyM" userLabel="row4">
                                                 <rect key="frame" x="0.0" y="177" width="374" height="44"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HxK-N0-uhs" userLabel="filler">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HxK-N0-uhs" userLabel="filler">
                                                         <rect key="frame" x="0.0" y="0.0" width="98" height="44"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                                        <state key="normal">
+                                                        <color key="backgroundColor" red="0.61202323439999995" green="0.58929324149999995" blue="0.58170408009999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="black" pointSize="35"/>
+                                                        <state key="normal" title=".">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="tappedDecimalButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="C2V-Kk-BVa"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YD6-ul-r3f">
                                                         <rect key="frame" x="138" y="0.0" width="98" height="44"/>
@@ -174,12 +178,12 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G8e-I5-mbJ" userLabel="C">
                                                         <rect key="frame" x="276" y="0.0" width="98" height="44"/>
                                                         <color key="backgroundColor" red="0.61202323439999995" green="0.58929324149999995" blue="0.58170408009999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                                         <state key="normal" title="C">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="tappedCleanButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="ACe-BG-PpD"/>
+                                                            <action selector="tappedClearButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="ACe-BG-PpD"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>

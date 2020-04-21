@@ -44,7 +44,7 @@ class CalculatorTestCase: XCTestCase {
     func testGivenCurrentOperationIsNotEmpty_WhenTappingCleanButton_ThenCurrentOperationShouldBeEmpty() {
         setCurrentOperation("5 + 14 x 14")
 
-        calculator.manageCleanButton()
+        calculator.manageClear()
 
         XCTAssertEqual("", calculator.currentOperation)
     }
