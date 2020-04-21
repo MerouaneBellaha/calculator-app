@@ -11,12 +11,12 @@ import XCTest
 
 class CalculatorTestCase: XCTestCase {
 
-    var calculator: Calculator!
+    var calculator: OperationManager!
 //    var viewController: ViewController!
 
     override func setUp() {
         super.setUp()
-        calculator = Calculator()
+        calculator = OperationManager()
 //        viewController = ViewController()
 //        calculator.calculatorDelegate = viewController
     }

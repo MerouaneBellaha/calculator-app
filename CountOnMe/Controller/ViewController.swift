@@ -13,28 +13,28 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
 
-    var calc = Calculator()
+    var operationManager = OperationManager()
     // View Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        calc.calculatorDelegate = self
+        operationManager.delegate = self
     }
 
     // View actions
     @IBAction private func tappedNumberButton(_ sender: UIButton) {
-        calc.manageNumber(sender.currentTitle!)
+        operationManager.manageNumber(sender.currentTitle!)
     }
 
     @IBAction private func tappedOperatorButton(_ sender: UIButton) {
-        calc.manageOperator(sender.currentTitle!)
+        operationManager.manageOperator(sender.currentTitle!)
     }
 
     @IBAction func tappedCleanButton(_ sender: UIButton) {
-        calc.manageCleanButton()
+        operationManager.manageCleanButton()
     }
 
     @IBAction private func tappedEqualButton(_ sender: UIButton) {
-        calc.calculResult()
+        operationManager.calculResult()
     }
 
     private func setAlertVc(with message: String) {
@@ -44,7 +44,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: CalculatorDelegate {
+extension ViewController: OperationManagerDelegate {
     func didUpdateOperation(with currentOperation: String) {
         textView?.text = currentOperation
     }
