@@ -74,53 +74,11 @@ struct OperationManager {
         currentOperation.append(".")
     }
 
-    private func calculate(leftOperand: Int, rightOperand: Int, currentOperator: Int, in operation: [String]) -> Double? {
-        guard let leftOperand = Double(operation[leftOperand]),
-            let rightOperand = Double(operation[rightOperand])
-            else { return nil }
-        let currentOperator = operation[currentOperator]
-
-        let result: Double
-        switch currentOperator {
-        case "x": result = leftOperand * rightOperand
-        case "/": result = leftOperand / rightOperand
-        case "+": result = leftOperand + rightOperand
-        case "-": result = leftOperand - rightOperand
-        default: fatalError("Unknown operator !")
-        }
-        return result
-    }
-
-    private func calculHighPrecedenceOperation(in calculation: [String]) -> [String]? {
-        var currentCalculation = calculation
-        while currentCalculation.containsHighPrecedenceOperation { // Guard statement ?
-            guard let index = currentCalculation.findOperatorIndice else { return nil } // < ??
-            guard let result = calculate(leftOperand: index-1, rightOperand: index+1,
-                                         currentOperator: index, in: currentCalculation) else { return nil }
-            currentCalculation.insert(String(result), at: index)
-            currentCalculation.removeUselessElement(around: index)
-        }
-        return currentCalculation
-    }
-
-    private func calculLowPrecedenceOperation(in calculation: [String]) -> [String]? {
-        var currentCalculation = calculation
-        while currentCalculation.count > 1 {
-            guard let result = calculate(leftOperand: 0, rightOperand: 2,
-                                         currentOperator: 1, in: currentCalculation) else { return nil }
-            //                currentCalculation = Array(currentCalculation.dropFirst(3))
-            currentCalculation.removeFirst(3)
-            currentCalculation.insert(String(result), at: 0)
-        }
-        return currentCalculation
-    }
-
-    mutating func calculResult() {
+    mutating func manageResult() {
         guard controlDoability() else { return }
-        var calculation = elements
-        if calculation.containsHighPrecedenceOperation { calculation = calculHighPrecedenceOperation(in: calculation) ?? calculation }
-        if calculation.containsLowPrecedenceOperation { calculation = calculLowPrecedenceOperation(in: calculation) ?? calculation }
-        let resultFormatted = formatResult(of: calculation.first!)
+        var calculator = Calculator(elementsToCalculate: elements)
+        let result = calculator.calcul()
+        let resultFormatted = formatResult(of: result.first!)
         currentOperation.append(" = \(resultFormatted)")
     }
 
@@ -136,14 +94,14 @@ struct OperationManager {
     }
 
     private func controlDoability() -> Bool {
-        guard expressionIsCorrect else {
-            delegate?.didFailWithError(message: "Un operateur est déja mis !")
-            return false
-        }
         guard expressionHaveEnoughElement,
             !expressionAlreadyCalculated else {
                 delegate?.didFailWithError(message: "Démarrez un nouveau calcul !")
                 return false
+        }
+        guard expressionIsCorrect else {
+            delegate?.didFailWithError(message: "Un operateur est déja mis !")
+            return false
         }
         return true
     }
