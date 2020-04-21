@@ -29,7 +29,7 @@ struct Calculator {
         return result
     }
 
-    mutating func calculHighPrecedenceOperation() {
+    private mutating func calculHighPrecedenceOperation() {
 
         while elementsToCalculate.containsHighPrecedenceOperation { // Guard statement ?
             guard let index = elementsToCalculate.findOperatorIndice else { return } // < ??
@@ -40,7 +40,7 @@ struct Calculator {
         }
     }
 
-    mutating func calculLowPrecedenceOperation() {
+    private mutating func calculLowPrecedenceOperation() {
         while elementsToCalculate.count > 1 {
             guard let result = calculate(leftOperand: 0, rightOperand: 2,
                                          currentOperator: 1, in: elementsToCalculate) else { return }
