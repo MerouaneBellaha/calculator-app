@@ -22,11 +22,11 @@ class ViewController: UIViewController {
 
     // View actions
     @IBAction private func tappedNumberButton(_ sender: UIButton) {
-        calc.manageNumber(number: sender.currentTitle!)
+        calc.manageNumber(sender.currentTitle!)
     }
 
     @IBAction private func tappedOperatorButton(_ sender: UIButton) {
-        calc.manageOperator(sign: sender.currentTitle!)
+        calc.manageOperator(sender.currentTitle!)
     }
 
     @IBAction func tappedCleanButton(_ sender: UIButton) {
@@ -45,10 +45,10 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: CalculatorDelegate {
-    func getCurrentOperation(_ currentOperation: String) {
+    func didUpdateOperation(with currentOperation: String) {
         textView?.text = currentOperation
     }
-    func handleError(with message: String) {
+    func didFailWithError(message: String) {
         setAlertVc(with: message)
     }
 }

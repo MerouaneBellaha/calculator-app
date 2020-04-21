@@ -8,14 +8,18 @@
 
 import Foundation
 
+protocol CalculatorDelegate: AnyObject {
+    func didUpdateOperation(with currentOperation: String)
+    func didFailWithError(message: String)
+}
+
 struct Calculator {
 
     weak var calculatorDelegate: CalculatorDelegate?
 
-//    var currentOperation = "" // private ? but can't acces it for test
-    var currentOperation: String = "" { // better way to do it ? default value ? delegate part must be test ?
+    var currentOperation: String = "" { // better way to do it ? default value ? delegate part must be test ? // private ??
         didSet {
-            calculatorDelegate?.getCurrentOperation(currentOperation)
+            calculatorDelegate?.didUpdateOperation(with: currentOperation)
         }
     }
     private var elements: [String] {
@@ -26,7 +30,7 @@ struct Calculator {
         return elements.count >= 3
     }
 
-    private var canAddOperator: Bool { // change name to expressionIsCorrect
+    private var expressionIsCorrect: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && !elements.isEmpty
     }
 
@@ -34,28 +38,28 @@ struct Calculator {
         elements.contains("=")
     }
 
-    private var canAddMinusOnFront: Bool {
+    private var canAddMinusInFront: Bool {
         return elements.last == "+" || elements.last == "x" || elements.last == "/" || elements.last == "" || elements.isEmpty
     }
 
-    mutating func manageNumber(number: String) {
+    mutating func manageNumber(_ number: String) {
         if expressionAlreadyCalculated { currentOperation = "" }
         currentOperation.append(number)
     }
 
-    mutating func manageOperator(sign: String) {
+    mutating func manageOperator(_ sign: String) {
         if expressionAlreadyCalculated { currentOperation = "" }
 
-        guard !(canAddMinusOnFront && sign == "-") else {
+        guard !(canAddMinusInFront && sign == "-") else {
             currentOperation.append(" \(sign)")
             return
         }
-        guard !canAddOperator else {
+        guard !expressionIsCorrect else {
             print(elements)
             currentOperation.append(" \(sign) ")
             return
         }
-        calculatorDelegate?.handleError(with: "Impossible d'ajouter un opérateur !")
+        calculatorDelegate?.didFailWithError(message: "Impossible d'ajouter un opérateur !")
     }
 
     mutating func manageCleanButton() {
@@ -79,26 +83,26 @@ struct Calculator {
         return result
     }
 
-    private func calculHighPrecedenceOperation(in calculation: [String]) -> [String] {
+    private func calculHighPrecedenceOperation(in calculation: [String]) -> [String]? {
         var currentCalculation = calculation
         while currentCalculation.containsHighPrecedenceOperation { // Guard statement ?
-            guard let index = currentCalculation.findOperatorIndice else { return [] } // < ??
+            guard let index = currentCalculation.findOperatorIndice else { return nil } // < ??
             guard let result = calculate(leftOperand: index-1, rightOperand: index+1,
-                                         currentOperator: index, in: currentCalculation) else { return [] }
+                                         currentOperator: index, in: currentCalculation) else { return nil }
             currentCalculation.insert(String(result), at: index)
             currentCalculation.removeUselessElement(around: index)
         }
         return currentCalculation
     }
 
-    private func calculLowPrecedenceOperation(in calculation: [String]) -> [String] {
+    private func calculLowPrecedenceOperation(in calculation: [String]) -> [String]? {
         var currentCalculation = calculation
         while currentCalculation.count > 1 {
-            if let result = calculate(leftOperand: 0, rightOperand: 2, currentOperator: 1, in: currentCalculation) {
-//                currentCalculation = Array(currentCalculation.dropFirst(3))
-                currentCalculation.removeFirst(3)
-                currentCalculation.insert(String(result), at: 0)
-            }
+            guard let result = calculate(leftOperand: 0, rightOperand: 2,
+                                         currentOperator: 1, in: currentCalculation) else { return nil }
+            //                currentCalculation = Array(currentCalculation.dropFirst(3))
+            currentCalculation.removeFirst(3)
+            currentCalculation.insert(String(result), at: 0)
         }
         return currentCalculation
     }
@@ -106,15 +110,15 @@ struct Calculator {
     mutating func calculResult() {
         guard controlDoability() else { return }
         var calculation = elements
-        if calculation.containsHighPrecedenceOperation { calculation = calculHighPrecedenceOperation(in: calculation) }
-        if calculation.containsLowPrecedenceOperation { calculation = calculLowPrecedenceOperation(in: calculation) }
+        if calculation.containsHighPrecedenceOperation { calculation = calculHighPrecedenceOperation(in: calculation) ?? calculation }
+        if calculation.containsLowPrecedenceOperation { calculation = calculLowPrecedenceOperation(in: calculation) ?? calculation }
         let resultFormatted = formatResult(of: calculation.first!)
         currentOperation.append(" = \(resultFormatted)")
     }
 
     private func formatResult(of number: String) -> String {
         guard number != "inf" else {
-            calculatorDelegate?.handleError(with: "Error: Division par 0 impossible")
+            calculatorDelegate?.didFailWithError(message: "Error: Division par 0 impossible")
             return "Error" }
         var result = String(format: "%.3f", Double(number)!)
         while result.contains(".") && (result.last == "0" || result.last == ".") {
@@ -124,13 +128,13 @@ struct Calculator {
     }
 
     private func controlDoability() -> Bool {
-        guard canAddOperator else {
-            calculatorDelegate?.handleError(with: "Un operateur est déja mis !")
+        guard expressionIsCorrect else {
+            calculatorDelegate?.didFailWithError(message: "Un operateur est déja mis !")
             return false
         }
         guard expressionHaveEnoughElement,
             !expressionAlreadyCalculated else {
-                calculatorDelegate?.handleError(with: "Démarrez un nouveau calcul !")
+                calculatorDelegate?.didFailWithError(message: "Démarrez un nouveau calcul !")
                 return false
         }
         return true
