@@ -34,7 +34,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func tappedEqualButton(_ sender: UIButton) {
-        operationManager.calculResult()
+        operationManager.manageResult()
     }
 
     private func setAlertVc(with message: String) {
