@@ -42,6 +42,13 @@ struct OperationManager {
         return elements.last == "+" || elements.last == "x" || elements.last == "/" || elements.last == "" || elements.isEmpty // les deux derniers font la mm chose ?
     }
 
+    private var containsDivisionByZero: Bool {
+        for (index, element) in elements.enumerated() where element == "/" && Double(elements[index + 1]) == 0 {
+            return false
+       }
+        return true
+    }
+
     mutating func manageNumber(_ number: String) {
         if expressionAlreadyCalculated { currentOperation = "" }
         currentOperation.append(number)
@@ -82,7 +89,7 @@ struct OperationManager {
         currentOperation.append(" = \(resultFormatted)")
     }
 
-    private func controlDoability() -> Bool {
+    private mutating func controlDoability() -> Bool {
         guard expressionHaveEnoughElement,
             !expressionAlreadyCalculated else {
                 delegate?.didFailWithError(message: "Démarrez un nouveau calcul !")
@@ -90,6 +97,11 @@ struct OperationManager {
         }
         guard expressionIsCorrect else {
             delegate?.didFailWithError(message: "Un operateur est déja mis !")
+            return false
+        }
+        guard containsDivisionByZero else {
+            currentOperation.append(" = Error")
+            delegate?.didFailWithError(message: "Une division par 0, et puis quoi encore!")
             return false
         }
         return true
@@ -100,7 +112,7 @@ struct OperationManager {
         let formater = NumberFormatter()
         formater.maximumFractionDigits = 3
         if let number = formater.number(from: number) {
-            if var result = formater.string(from: number) {
+            if let result = formater.string(from: number) {
                 formatedResult = result
 //            while result.contains(".") && (result.last == "0" || result.last == ".") {
 //                result.removeLast()
