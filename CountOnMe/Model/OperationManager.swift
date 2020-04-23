@@ -95,16 +95,19 @@ struct OperationManager {
         return true
     }
 
-    private func formatResult(of number: String) -> String { // Checker -inf 
-        guard number != "inf" || number != "-inf"  else {
-            delegate?.didFailWithError(message: "Error: Division par 0 impossible")
-            return "Error" }
-        var result = String(format: "%.3f", Double(number)!) // unwrap correctement
-        while result.contains(".") && (result.last == "0" || result.last == ".") {
-            result.removeLast()
+    private func formatResult(of number: String) -> String { // Factoriser, extension -> my formater
+        var formatedResult = ""
+        let formater = NumberFormatter()
+        formater.maximumFractionDigits = 3
+        if let number = formater.number(from: number) {
+            if var result = formater.string(from: number) {
+                formatedResult = result
+//            while result.contains(".") && (result.last == "0" || result.last == ".") {
+//                result.removeLast()
+                }
+            }
+        return formatedResult
         }
-        return result
-    }
 }
 
 
