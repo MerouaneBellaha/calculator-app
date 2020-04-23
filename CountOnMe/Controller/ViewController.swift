@@ -46,14 +46,6 @@ class ViewController: UIViewController {
     @IBAction private func tappedDecimalButton(_ sender: UIButton) {
         operationManager.manageDecimal()
     }
-
-// MARK: - Methods
-
-    private func setAlertVc(with message: String) { // -> ext UIViexcontroller 
-        let alertVC = UIAlertController(title: "Zéro!", message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        present(alertVC, animated: true, completion: nil)
-    }
 }
 
 // MARK: - OperationManagerDelegate
@@ -63,6 +55,6 @@ extension ViewController: OperationManagerDelegate {
         textView?.text = currentOperation
     }
     func didFailWithError(message: String) {
-        setAlertVc(with: message)
+        self.setAlertVc(with: message)
     }
 }
