@@ -55,6 +55,6 @@ extension ViewController: OperationManagerDelegate {
         textView?.text = currentOperation
     }
     func didFailWithError(message: String) {
-        self.setAlertVc(with: message)
+        setAlertVc(with: message)
     }
 }

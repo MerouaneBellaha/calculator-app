@@ -26,28 +26,28 @@ struct OperationManager {
         return currentOperation.split(separator: " ").map { "\($0)" }
     }
 
-    private var expressionHaveEnoughElement: Bool {
-        return elements.count >= 3
-    }
-
-    private var expressionIsCorrect: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && !elements.isEmpty
-    }
-
-    private var expressionAlreadyCalculated: Bool {
-        elements.contains("=")
-    }
-
-    private var canAddMinusInFront: Bool {
-        return elements.last == "+" || elements.last == "x" || elements.last == "/" || elements.last == "" || elements.isEmpty // les deux derniers font la mm chose ?
-    }
-
-    private var containsDivisionByZero: Bool {
-        for (index, element) in elements.enumerated() where element == "/" && Double(elements[index + 1]) == 0 {
-            return false
-       }
-        return true
-    }
+//    private var expressionHaveEnoughElement: Bool {
+//        return elements.count >= 3
+//    }
+//
+//    private var expressionIsCorrect: Bool {
+//        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && !elements.isEmpty
+//    }
+//
+//    private var expressionAlreadyCalculated: Bool {
+//        elements.contains("=")
+//    }
+//
+//    private var canAddMinusInFront: Bool {
+//        return elements.last == "+" || elements.last == "x" || elements.last == "/" || elements.last == "" || elements.isEmpty // les deux derniers font la mm chose ?
+//    }
+//
+//    private var containsDivisionByZero: Bool {
+//        for (index, element) in elements.enumerated() where element == "/" && Double(elements[index + 1]) == 0 {
+//            return false
+//       }
+//        return true
+//    }
 
     mutating func manageNumber(_ number: String) {
         if expressionAlreadyCalculated { currentOperation = "" }
