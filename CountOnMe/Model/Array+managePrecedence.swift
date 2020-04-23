@@ -8,21 +8,21 @@
 
 import Foundation
 
-extension Array {
+extension Array where Element == String {
     /// return true if the array contains "/" or "x"
     var containsHighPrecedenceOperation: Bool {
-        if self.contains(where: { $0 as? String == "/" || $0 as? String == "x" }) { return true }
+        if self.contains(where: { $0 == "/" || $0 == "x" }) { return true }
         return false
     }
 
     var containsLowPrecedenceOperation: Bool {
-        if self.contains(where: { $0 as? String == "+" || $0 as? String == "-"}) { return true }
+        if self.contains(where: { $0 == "+" || $0 == "-"}) { return true }
         return false
     }
 
     /// returns the first index of "/" or "x"
     var findOperatorIndice: Int? {
-        return self.firstIndex(where: { $0 as? String == "/"  || $0 as? String == "x"})
+        return self.firstIndex(where: { $0 == "/"  || $0 == "x"})
     }
 
     /// remove element at index+1 two times and at index-1

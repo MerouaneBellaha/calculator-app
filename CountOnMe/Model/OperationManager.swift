@@ -22,9 +22,83 @@ struct OperationManager {
             delegate?.didUpdateOperation(with: currentOperation)
         }
     }
-    private var elements: [String] {
+    private var expression: [String] {
         return currentOperation.split(separator: " ").map { "\($0)" }
     }
+
+    mutating func manageNumber(_ number: String) {
+        if expression.alreadyCalculated { currentOperation = "" }
+        currentOperation.append(number)
+    }
+
+    mutating func manageOperator(_ sign: String) {
+        if expression.alreadyCalculated { currentOperation = "" }
+
+        guard !(expression.canAddMinusInFront && sign == "-") else {
+            currentOperation.append(" \(sign)")
+            return
+        }
+        guard !expression.isCorrect else {
+            print(expression)
+            currentOperation.append(" \(sign) ")
+            return
+        }
+        delegate?.didFailWithError(message: "Impossible d'ajouter un opérateur !")
+    }
+
+    mutating func manageClear() {
+        currentOperation.removeAll()
+    }
+
+    mutating func manageDecimal() {
+        guard expression.isCorrect && !(expression.last?.contains(".") ?? false) && !expression.alreadyCalculated else {
+            delegate?.didFailWithError(message: "Impossible d'ajouter un point !")
+            return
+        }
+        currentOperation.append(".")
+    }
+
+    mutating func manageResult() {
+        guard calculIsDoable() else { return }
+        var calculator = Calculator(elementsToCalculate: expression)
+        guard let result = calculator.calcul().first else { return }
+        let resultFormatted = format(result)
+        currentOperation.append(" = \(resultFormatted)")
+    }
+
+    private mutating func calculIsDoable() -> Bool {
+        guard expression.haveEnoughElement,
+            !expression.alreadyCalculated else {
+                delegate?.didFailWithError(message: "Démarrez un nouveau calcul !")
+                return false
+        }
+        guard expression.isCorrect else {
+            delegate?.didFailWithError(message: "Un operateur est déja mis !")
+            return false
+        }
+        guard !expression.containsDivisionByZero else {
+            currentOperation.append(" = Error")
+            delegate?.didFailWithError(message: "Une division par 0, et puis quoi encore!")
+            return false
+        }
+        return true
+    }
+
+    private func format(_ number: String) -> String { // Factoriser, extension -> my formater
+        var formatedResult = ""
+        let formater = NumberFormatter()
+        formater.maximumFractionDigits = 3
+        if let number = formater.number(from: number) {
+            if let result = formater.string(from: number) {
+                formatedResult = result
+//            while result.contains(".") && (result.last == "0" || result.last == ".") {
+//                result.removeLast()
+                }
+            }
+        return formatedResult
+        }
+}
+
 
 //    private var expressionHaveEnoughElement: Bool {
 //        return elements.count >= 3
@@ -49,78 +123,9 @@ struct OperationManager {
 //        return true
 //    }
 
-    mutating func manageNumber(_ number: String) {
-        if expressionAlreadyCalculated { currentOperation = "" }
-        currentOperation.append(number)
-    }
 
-    mutating func manageOperator(_ sign: String) {
-        if expressionAlreadyCalculated { currentOperation = "" }
 
-        guard !(canAddMinusInFront && sign == "-") else {
-            currentOperation.append(" \(sign)")
-            return
-        }
-        guard !expressionIsCorrect else {
-            print(elements)
-            currentOperation.append(" \(sign) ")
-            return
-        }
-        delegate?.didFailWithError(message: "Impossible d'ajouter un opérateur !")
-    }
 
-    mutating func manageClear() {
-        currentOperation.removeAll()
-    }
-
-    mutating func manageDecimal() {
-        guard expressionIsCorrect && !(elements.last?.contains(".") ?? false) && !expressionAlreadyCalculated else {
-            delegate?.didFailWithError(message: "Impossible d'ajouter un point !")
-            return
-        }
-        currentOperation.append(".")
-    }
-
-    mutating func manageResult() {
-        guard controlDoability() else { return }
-        var calculator = Calculator(elementsToCalculate: elements)
-        let result = calculator.calcul()
-        let resultFormatted = formatResult(of: result.first!) // unwrap correctement
-        currentOperation.append(" = \(resultFormatted)")
-    }
-
-    private mutating func controlDoability() -> Bool {
-        guard expressionHaveEnoughElement,
-            !expressionAlreadyCalculated else {
-                delegate?.didFailWithError(message: "Démarrez un nouveau calcul !")
-                return false
-        }
-        guard expressionIsCorrect else {
-            delegate?.didFailWithError(message: "Un operateur est déja mis !")
-            return false
-        }
-        guard containsDivisionByZero else {
-            currentOperation.append(" = Error")
-            delegate?.didFailWithError(message: "Une division par 0, et puis quoi encore!")
-            return false
-        }
-        return true
-    }
-
-    private func formatResult(of number: String) -> String { // Factoriser, extension -> my formater
-        var formatedResult = ""
-        let formater = NumberFormatter()
-        formater.maximumFractionDigits = 3
-        if let number = formater.number(from: number) {
-            if let result = formater.string(from: number) {
-                formatedResult = result
-//            while result.contains(".") && (result.last == "0" || result.last == ".") {
-//                result.removeLast()
-                }
-            }
-        return formatedResult
-        }
-}
 
 
 //    private var expressionHaveResult: Bool { // same as expressionAlreadyCalculated ?
