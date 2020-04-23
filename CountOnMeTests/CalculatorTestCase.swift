@@ -12,13 +12,10 @@ import XCTest
 class CalculatorTestCase: XCTestCase {
 
     var calculator: OperationManager!
-//    var viewController: ViewController!
 
     override func setUp() {
         super.setUp()
         calculator = OperationManager()
-//        viewController = ViewController()
-//        calculator.calculatorDelegate = viewController
     }
 
     func setCurrentOperation(_ operation: String) {
@@ -28,15 +25,15 @@ class CalculatorTestCase: XCTestCase {
     func testGivenCurrentOperationIsEmpty_WhenTappingNumberButton5_ThenCurrentOperationShouldBe5() {
         setCurrentOperation("")
 
-        calculator.manageNumber(number: "5")
+        calculator.manageNumber("5")
 
         XCTAssertEqual("5", calculator.currentOperation)
     }
 
     func testGivenCurrentOperationHasBeenCalculated_WhenTappingNumberButton5_ThenCurrentOperationShouldBe5() {
-        setCurrentOperation("5 + 14 = 19")
+        setCurrentOperation("5 + 14 = 19")// decomposer
 
-        calculator.manageNumber(number: "5")
+        calculator.manageNumber("5")
 
         XCTAssertEqual("5", calculator.currentOperation)
     }
@@ -48,23 +45,6 @@ class CalculatorTestCase: XCTestCase {
 
         XCTAssertEqual("", calculator.currentOperation)
     }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
 
 

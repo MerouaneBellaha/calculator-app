@@ -30,9 +30,8 @@ struct Calculator {
     }
 
     private mutating func calculHighPrecedenceOperation() {
-
-        while elementsToCalculate.containsHighPrecedenceOperation { // Guard statement ?
-            guard let index = elementsToCalculate.findOperatorIndice else { return } // < ??
+        while elementsToCalculate.containsHighPrecedenceOperation {
+            guard let index = elementsToCalculate.findOperatorIndice else { return }
             guard let result = calculate(leftOperand: index-1, rightOperand: index+1,
                                          currentOperator: index, in: elementsToCalculate) else { return }
             elementsToCalculate.insert(String(result), at: index)

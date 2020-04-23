@@ -8,19 +8,25 @@
 
 import UIKit
 
-
 class ViewController: UIViewController {
 
-    @IBOutlet weak var textView: UITextView!
+// MARK: - @IBOutlet
 
-    var operationManager = OperationManager()
-    // View Life cycles
+    @IBOutlet private weak var textView: UITextView!
+
+// MARK: - Properties
+
+    private var operationManager = OperationManager()
+
+// MARK: - ViewLifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         operationManager.delegate = self
     }
 
-    // View actions
+// MARK: - @IBAction
+
     @IBAction private func tappedNumberButton(_ sender: UIButton) {
         operationManager.manageNumber(sender.currentTitle!)
     }
@@ -29,7 +35,7 @@ class ViewController: UIViewController {
         operationManager.manageOperator(sender.currentTitle!)
     }
 
-    @IBAction func tappedClearButton(_ sender: UIButton) {
+    @IBAction private func tappedClearButton(_ sender: UIButton) {
         operationManager.manageClear()
     }
 
@@ -37,16 +43,20 @@ class ViewController: UIViewController {
         operationManager.manageResult()
     }
 
-    @IBAction func tappedDecimalButton(_ sender: UIButton) {
+    @IBAction private func tappedDecimalButton(_ sender: UIButton) {
         operationManager.manageDecimal()
     }
 
-    private func setAlertVc(with message: String) {
+// MARK: - Methods
+
+    private func setAlertVc(with message: String) { // -> ext UIViexcontroller 
         let alertVC = UIAlertController(title: "Zéro!", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        self.present(alertVC, animated: true, completion: nil)
+        present(alertVC, animated: true, completion: nil)
     }
 }
+
+// MARK: - OperationManagerDelegate
 
 extension ViewController: OperationManagerDelegate {
     func didUpdateOperation(with currentOperation: String) {

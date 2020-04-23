@@ -156,7 +156,7 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HxK-N0-uhs" userLabel="filler">
                                                         <rect key="frame" x="0.0" y="0.0" width="98" height="44"/>
                                                         <color key="backgroundColor" red="0.61202323439999995" green="0.58929324149999995" blue="0.58170408009999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="black" pointSize="35"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="35"/>
                                                         <state key="normal" title=".">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>

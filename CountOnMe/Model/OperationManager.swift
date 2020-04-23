@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol OperationManagerDelegate: AnyObject {
+protocol OperationManagerDelegate: class {
     func didUpdateOperation(with currentOperation: String)
     func didFailWithError(message: String)
 }
@@ -17,7 +17,7 @@ struct OperationManager {
 
     weak var delegate: OperationManagerDelegate?
 
-    var currentOperation: String = "" { // better way to do it ? default value ? delegate part must be test ? // private ??
+    var currentOperation: String = "" {
         didSet {
             delegate?.didUpdateOperation(with: currentOperation)
         }
@@ -63,7 +63,7 @@ struct OperationManager {
     }
 
     mutating func manageClear() {
-        currentOperation = ""
+        currentOperation.removeAll()
     }
 
     mutating func manageDecimal() {
@@ -78,19 +78,8 @@ struct OperationManager {
         guard controlDoability() else { return }
         var calculator = Calculator(elementsToCalculate: elements)
         let result = calculator.calcul()
-        let resultFormatted = formatResult(of: result.first!)
+        let resultFormatted = formatResult(of: result.first!) // unwrap correctement
         currentOperation.append(" = \(resultFormatted)")
-    }
-
-    private func formatResult(of number: String) -> String {
-        guard number != "inf" else {
-            delegate?.didFailWithError(message: "Error: Division par 0 impossible")
-            return "Error" }
-        var result = String(format: "%.3f", Double(number)!)
-        while result.contains(".") && (result.last == "0" || result.last == ".") {
-            result.removeLast()
-        }
-        return result
     }
 
     private func controlDoability() -> Bool {
@@ -104,6 +93,17 @@ struct OperationManager {
             return false
         }
         return true
+    }
+
+    private func formatResult(of number: String) -> String { // Checker -inf 
+        guard number != "inf" || number != "-inf"  else {
+            delegate?.didFailWithError(message: "Error: Division par 0 impossible")
+            return "Error" }
+        var result = String(format: "%.3f", Double(number)!) // unwrap correctement
+        while result.contains(".") && (result.last == "0" || result.last == ".") {
+            result.removeLast()
+        }
+        return result
     }
 }
 
