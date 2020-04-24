@@ -61,8 +61,8 @@ struct OperationManager {
     mutating func manageResult() {
         guard calculIsDoable() else { return }
         var calculator = Calculator(elementsToCalculate: expression)
-        guard let result = calculator.calcul().first else { return }
-        let resultFormatted = format(result)
+        guard let unformattedResult = calculator.calcul().first else { return }
+        guard let resultFormatted = format(unformattedResult) else { return }
         currentOperation.append(" = \(resultFormatted)")
     }
 
@@ -78,69 +78,17 @@ struct OperationManager {
         }
         guard !expression.containsDivisionByZero else {
             currentOperation.append(" = Error")
-            delegate?.didFailWithError(message: "Une division par 0, et puis quoi encore!")
+            delegate?.didFailWithError(message: "Division par zéro impossible")
             return false
         }
         return true
     }
 
-    private func format(_ number: String) -> String { // Factoriser, extension -> my formater
-        var formatedResult = ""
-        let formater = NumberFormatter()
-        formater.maximumFractionDigits = 3
-        if let number = formater.number(from: number) {
-            if let result = formater.string(from: number) {
-                formatedResult = result
-//            while result.contains(".") && (result.last == "0" || result.last == ".") {
-//                result.removeLast()
-                }
-            }
-        return formatedResult
-        }
+    private func format(_ number: String) -> String? {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 3
+        guard let formattedNumber = formatter.number(from: number) else { return nil }
+        guard let result = formatter.string(from: formattedNumber) else { return nil }
+        return result
+    }
 }
-
-
-//    private var expressionHaveEnoughElement: Bool {
-//        return elements.count >= 3
-//    }
-//
-//    private var expressionIsCorrect: Bool {
-//        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && !elements.isEmpty
-//    }
-//
-//    private var expressionAlreadyCalculated: Bool {
-//        elements.contains("=")
-//    }
-//
-//    private var canAddMinusInFront: Bool {
-//        return elements.last == "+" || elements.last == "x" || elements.last == "/" || elements.last == "" || elements.isEmpty // les deux derniers font la mm chose ?
-//    }
-//
-//    private var containsDivisionByZero: Bool {
-//        for (index, element) in elements.enumerated() where element == "/" && Double(elements[index + 1]) == 0 {
-//            return false
-//       }
-//        return true
-//    }
-
-
-
-
-
-
-//    private var expressionHaveResult: Bool { // same as expressionAlreadyCalculated ?
-//        return currentOperation.firstIndex(of: "=") != nil
-//    }
-
-//    private var expressionIsCorrect: Bool { // same as canAddOperator ?
-//        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
-//    }
-
-
-// l.
-//            if let index = currentCalculation.findOperatorIndice {
-//                if let result = calculate(leftOperand: index-1, rightOperand: index+1, currentOperator: index, in: currentCalculation) {
-//                    currentCalculation.insert(String(result), at: index)
-//                    currentCalculation.removeUselessElement(around: index)
-//                }
-//            }

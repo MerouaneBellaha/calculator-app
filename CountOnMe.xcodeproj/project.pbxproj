@@ -73,6 +73,7 @@
 				CB51A790244C9C5900B2253C /* .swiftlint.yml */,
 				1FA43BD1224E569900F565CB /* CountOnMe */,
 				1FA43BDE224E569A00F565CB /* Info.plist */,
+				1FA43BD2224E569900F565CB /* AppDelegate.swift */,
 				CB51A799244CA3AF00B2253C /* CountOnMeTests */,
 				1FA43BD0224E569900F565CB /* Products */,
 			);
@@ -127,7 +128,6 @@
 		CBB1C76124433A1E006CD281 /* Ressources */ = {
 			isa = PBXGroup;
 			children = (
-				1FA43BD2224E569900F565CB /* AppDelegate.swift */,
 				1FA43BD9224E569A00F565CB /* Assets.xcassets */,
 			);
 			path = Ressources;
@@ -136,10 +136,10 @@
 		CBB7E92F244339CE004EE6BF /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CBB1C7622443431F006CD281 /* Array+managePrecedence.swift */,
 				CBB1C7642443432C006CD281 /* OperationManager.swift */,
 				CB9B3AF6244F2B0300CC5D7F /* Calculator.swift */,
 				CB4A3BE32451E10900A8202D /* Array+manageExpression.swift */,
+				CBB1C7622443431F006CD281 /* Array+managePrecedence.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

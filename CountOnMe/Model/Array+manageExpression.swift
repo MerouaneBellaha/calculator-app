@@ -22,7 +22,7 @@ extension Array where Element == String {
     }
 
     var canAddMinusInFront: Bool {
-        return self.last == "+" || self.last == "x" || self.last == "/" || self.last == "" || self.isEmpty // les deux derniers font la mm chose ?
+        return self.last == "+" || self.last == "x" || self.last == "/" || self.isEmpty
     }
 
     var containsDivisionByZero: Bool {
