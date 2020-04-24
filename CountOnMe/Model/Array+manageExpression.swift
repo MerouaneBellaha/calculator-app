@@ -3,7 +3,7 @@
 //  CountOnMe
 //
 //  Created by Merouane Bellaha on 23/04/2020.
-//  Copyright © 2020 Vincent Saluzzo. All rights reserved.
+//  Copyright © 2020 Merouane Bellaha. All rights reserved.
 //
 
 import Foundation

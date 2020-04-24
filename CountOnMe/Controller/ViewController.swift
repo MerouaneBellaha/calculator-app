@@ -1,9 +1,9 @@
 //
 //  ViewController.swift
-//  SimpleCalc
+//  CountOnMe
 //
 //  Created by Vincent Saluzzo on 29/03/2019.
-//  Copyright © 2019 Vincent Saluzzo. All rights reserved.
+//  Copyright © 2020 Merouane Bellaha. All rights reserved.
 //
 
 import UIKit
