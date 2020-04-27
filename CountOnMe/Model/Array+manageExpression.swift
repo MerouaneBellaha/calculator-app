@@ -25,6 +25,12 @@ extension Array where Element == String {
         return self.last == "+" || self.last == "x" || self.last == "/" || self.isEmpty
     }
 
+    var containsPoint: Bool {
+        guard let containsPoint = self.last?.contains(".") else { return false }
+        return containsPoint
+//        return self.last?.contains(".") ?? false
+    }
+
     var containsDivisionByZero: Bool {
         for (index, element) in self.enumerated() where element == "/" && Double(self[index + 1]) == 0 {
             return true

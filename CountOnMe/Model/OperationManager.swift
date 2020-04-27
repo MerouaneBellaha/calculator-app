@@ -27,12 +27,12 @@ struct OperationManager {
     }
 
     mutating func manageNumber(_ number: String) {
-        if expression.alreadyCalculated { currentOperation = "" }
+        if expression.alreadyCalculated { currentOperation.removeAll() }
         currentOperation.append(number)
     }
 
     mutating func manageOperator(_ sign: String) {
-        if expression.alreadyCalculated { currentOperation = "" }
+        if expression.alreadyCalculated { currentOperation.removeAll() }
 
         guard !(expression.canAddMinusInFront && sign == "-") else {
             currentOperation.append(" \(sign)")
@@ -51,7 +51,7 @@ struct OperationManager {
     }
 
     mutating func manageDecimal() {
-        guard expression.isCorrect && !(expression.last?.contains(".") ?? false) && !expression.alreadyCalculated else {
+        guard expression.isCorrect && !expression.containsPoint && !expression.alreadyCalculated else {
             delegate?.didFailWithError(message: "Impossible d'ajouter un point !")
             return
         }
@@ -68,7 +68,7 @@ struct OperationManager {
 
     private mutating func calculIsDoable() -> Bool {
         guard expression.haveEnoughElement,
-            !expression.alreadyCalculated else {
+            !expression.alreadyCalculated  else {
                 delegate?.didFailWithError(message: "Démarrez un nouveau calcul !")
                 return false
         }

@@ -24,7 +24,7 @@ struct Calculator {
         case "/": result = leftOperand / rightOperand
         case "+": result = leftOperand + rightOperand
         case "-": result = leftOperand - rightOperand
-        default: fatalError("Unknown operator !")
+        default: return nil/*fatalError("Unknown operator !")*/
         }
         return result
     }
