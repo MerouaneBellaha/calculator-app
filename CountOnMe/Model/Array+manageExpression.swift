@@ -25,10 +25,9 @@ extension Array where Element == String {
         return self.last == "+" || self.last == "x" || self.last == "/" || self.isEmpty
     }
 
-    var containsPoint: Bool {
-        guard let containsPoint = self.last?.contains(".") else { return false }
-        return containsPoint
-//        return self.last?.contains(".") ?? false
+    var containsDecimal: Bool {
+        guard let containsDecimal = self.last?.contains(".") else { return false }
+        return containsDecimal
     }
 
     var containsDivisionByZero: Bool {

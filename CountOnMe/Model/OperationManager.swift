@@ -51,7 +51,7 @@ struct OperationManager {
     }
 
     mutating func manageDecimal() {
-        guard expression.isCorrect && !expression.containsPoint && !expression.alreadyCalculated else {
+        guard expression.isCorrect && !expression.containsDecimal && !expression.alreadyCalculated else {
             delegate?.didFailWithError(message: "Impossible d'ajouter un point !")
             return
         }
