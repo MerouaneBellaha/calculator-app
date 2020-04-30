@@ -9,16 +9,16 @@
 import XCTest
 @testable import CountOnMe
 
-class OperationManagerTestCase: XCTestCase {
+final class OperationManagerTestCase: XCTestCase {
 
-    var operationManager: OperationManager!
+    private var operationManager: OperationManager!
 
     override func setUp() {
         super.setUp()
         operationManager = OperationManager()
     }
 
-    func setExpression(operand: [String], sign: [String] = [], calculOperation: Bool = false, clearOperation: Bool = false) {
+    private func setExpression(operand: [String], sign: [String] = [], calculOperation: Bool = false, clearOperation: Bool = false) {
         for (index, operand) in operand.enumerated() {
             for element in operand {
                 if element == "." {
@@ -39,36 +39,58 @@ class OperationManagerTestCase: XCTestCase {
         if clearOperation { operationManager.manageClear() }
     }
 
+    private var expression: [String] {
+//        return operationManager.currentOperation.trimmingCharacters(in: .whitespaces).components(separatedBy: " ") // ??
+        return operationManager.currentOperation.split(separator: " ").map { String($0) }
+    }
+
+
     // MARK: - manageNumber()
 
-//    func testGivenCurrentOperationIsEmpty_WhenTappingNumberButton5_ThenCurrentOperationShouldBe5() {
-//        setExpression(operand: ["5"])
-//
-//        XCTAssertEqual("5", operationManager.currentOperation)
-//    }
+    func testGivenCurrentOperationIsEmpty_WhenTapping0123456789_ThenCurrentOperationShouldBe0123456789() {
+        setExpression(operand: ["0123456789"])
 
-//    func testGivenCurrentOperationHasBeenCalculated_WhenTappingNumberButton5_ThenCurrentOperationShouldBe5() {
-//        setExpression(operand: ["5", "14"], sign: ["-"], equal: true)
-//
-//        operationManager.manageNumber("5")
-//
-//        XCTAssertEqual("5", operationManager.currentOperation)
-//    }
+        XCTAssertEqual(operationManager.currentOperation, "0123456789")
+    }
+
+    func testGivenCurrentOperationIsAlreadyCalculated_WhenTappingNumberButton_ThenExpressionShouldContainsOnlyOneElement() {
+        setExpression(operand: ["5", "4"], sign: ["+"], calculOperation: true)
+
+        operationManager.manageNumber("5")
+
+        XCTAssert(expression.count == 1)
+    }
 
     // MARK: - manageOperator
 
-    func testGivenCurrentOperationHasBeenCalculated_WhenTappingSignButtonDifferentThanMinus_ThenCurrentOperationShouldBeEmpty() {
-        setExpression(operand: ["5", "14"], sign: ["+"], calculOperation: true)
+    func testGivenCurrentOperationIsEmpty_WhenTapping2plus4minus5multiply2divide7_ThenCurrentOperationMustContainsAll4Operators() {
+        var containsAllOperators: Bool {
+            return expression.contains("+") && expression.contains("-") && expression.contains("/") && expression.contains("x")
+        }
+        setExpression(operand: ["2", "4", "5", "7"], sign: ["+", "- ", "x", "/"])
 
-        operationManager.manageOperator("/")
-
-        XCTAssertTrue(operationManager.currentOperation.isEmpty)
+        XCTAssert(containsAllOperators)
     }
 
-    func testGivenCurrentOperationIsEmpty_WhenTappingMinusButtonThenAndTappingNumberButton5_ThenCurrentOperationShouldBeMinus5() {
+    func testGivenCurrentOperationHasBeenCalculated_WhenTappingSignButtonDifferentThanMinus_ThenCurrentOperationShouldBeEmpty() {
+        for element in ["x", "/", "+"] {
+            setExpression(operand: ["5", "14"], sign: ["+"], calculOperation: true)
+            operationManager.manageOperator(element)
+            XCTAssertTrue(operationManager.currentOperation.isEmpty)
+        }
+    }
+
+    func testGivenOperationHasBeenCalculated_WhenTappingMinus_ThenCurrentOperationShouldBeMinusSign() {
+        setExpression(operand: ["5", "14"], sign: ["+"], calculOperation: true)
+        operationManager.manageOperator("-")
+        XCTAssert(expression.count == 1 && expression.last == "-")
+    }
+    //
+
+    func testGivenCurrentOperationIsEmpty_WhenTappingMinusButtonAndTappingNumberButton5_ThenCurrentOperationShouldBeMinus5() {
         setExpression(operand: ["-5"])
 
-        XCTAssertEqual(" -5", operationManager.currentOperation)
+        XCTAssert(expression.count == 1 && expression.last == "-5")
     }
 
     // MARK: - manageClear
@@ -81,10 +103,31 @@ class OperationManagerTestCase: XCTestCase {
 
     // MARK: - manageDecimal
 
-    func testGivenCurrentIsEmpty_WhenTapping4point7point_ThenCurrentOperationShouldBe4point7() {
-        setExpression(operand: ["4.7."])
+    func testGivenLastElementOfCurrentOperationIsNotANumber_WhenTappingDecimalButton_ThenLastElementShouldNotBeAPoint() {
+        for element in ["x", "+", "-", "/"] {
+            setExpression(operand: ["4"], sign: [element])
 
-        XCTAssertEqual("4.7", operationManager.currentOperation)
+            operationManager.manageDecimal()
+
+            XCTAssert(expression.last != ".")
+        }
+    }
+
+    func testGiventLastElementOfCurrentOperationIsANumber_WhenTappingDecimalButtonAndANumberButton_ThenLastElementShouldBeADecimalNumber() {
+        setExpression(operand: ["5", "14"], sign: ["+"])
+
+        operationManager.manageDecimal()
+        operationManager.manageNumber("2")
+
+        XCTAssert(expression.last?.contains(".") != nil)
+    }
+
+    func testGivenLastElementIsADecimal_WhenTappingDecimalButton_ThenLastElementOfLastElementShouldNotBeAPoint() {
+        setExpression(operand: ["5.23"])
+
+        operationManager.manageDecimal()
+
+        XCTAssert(expression.last?.last != ".")
     }
 
     // MARK: - manageResult
@@ -92,29 +135,34 @@ class OperationManagerTestCase: XCTestCase {
     func testGivenCurrentOperationIsLessThan3Elements_WhenTappingEquaButton_ThenCurrentOperationShoudStayTheSame() {
         setExpression(operand: ["5"], sign: ["+"], calculOperation: true)
 
-        XCTAssertEqual("5 + ", operationManager.currentOperation)
+        XCTAssert(operationManager.currentOperation == "5 + ")
+    }
+
+    func testGivenCurrentOperationIsAlreadyCalcultaed_ThenTappingEqualButton_ThenCurrentOperationShouldStayTheSame() {
+        setExpression(operand: ["5", "4"], sign: ["+"], calculOperation: true)
+        let savedExpression = expression
+
+        operationManager.manageResult()
+
+        XCTAssert(savedExpression == expression)
     }
 
     func testGivenCurrentOperationEndedWithASign_WhenTappingEquaButton_ThenCurrentOperationShoudStayTheSame() {
         setExpression(operand: ["5", "122"], sign: ["+", "-"], calculOperation: true)
-
-        XCTAssertEqual("5 + 122 - ", operationManager.currentOperation)
+        // saved expression ?
+        XCTAssert(operationManager.currentOperation == "5 + 122 - ")
     }
 
     func testGivenOperationContainsDivisionBy0_WhenTappingEqualButton_ThenCurrentOperationShouldDisplayError() {
         setExpression(operand: ["5", "122", "0"], sign: ["x", "/"], calculOperation: true)
 
-        XCTAssertEqual("5 x 122 / 0 = Error", operationManager.currentOperation)
+        XCTAssert(expression.last == "Error")
     }
 
-    func testGivenCurrentOperationContainsHighPrecedenceOperation_WhenTappingEqualButton_ThenCurrentOperationShouldMakeThemFirst() {
-        setExpression(operand: ["2", "4", "2", "6"], sign: ["+", "/", "x"], calculOperation: true)
+    func testGivenOperationResultShouldHaveMoreDecimals_WhenTappingEqualButton_ThenResultShouldBeRoundedUpTo3() {
+        setExpression(operand: ["5.1234", "4.1235"], sign: ["+"], calculOperation: true)
 
-        XCTAssertEqual("2 + 4 / 2 x 6 = \(2+4/2*6)", operationManager.currentOperation)
-       }
+        XCTAssert(expression.last?.count == 5)
+    }
 }
 
-
-// cmd u lance tous les tests
-// Behavior Driven Dev. : Given When Then : "GivenPostHasZeroLike_WhenPostIsLiked_ThenPostHasOneLike"
-// 
