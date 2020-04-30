@@ -10,7 +10,7 @@ import Foundation
 
 struct Calculator {
 
-    var elementsToCalculate: [String]
+    var elementsToCalculate: [String] = []
 
     private func calculate(leftOperand: Int, rightOperand: Int, currentOperator: Int, in operation: [String]) -> Double? {
         guard let leftOperand = Double(operation[leftOperand]),
@@ -24,7 +24,7 @@ struct Calculator {
         case "/": result = leftOperand / rightOperand
         case "+": result = leftOperand + rightOperand
         case "-": result = leftOperand - rightOperand
-        default: return nil/*fatalError("Unknown operator !")*/
+        default: return nil
         }
         return result
     }
@@ -43,16 +43,17 @@ struct Calculator {
         while elementsToCalculate.count > 1 {
             guard let result = calculate(leftOperand: 0, rightOperand: 2,
                                          currentOperator: 1, in: elementsToCalculate) else { return }
-            //                currentCalculation = Array(currentCalculation.dropFirst(3))
             elementsToCalculate.removeFirst(3)
             elementsToCalculate.insert(String(result), at: 0)
         }
     }
 
-    mutating func calcul() -> [String] {
+    mutating func calcul() -> Double? {
         if elementsToCalculate.containsHighPrecedenceOperation { calculHighPrecedenceOperation() }
         if elementsToCalculate.containsLowPrecedenceOperation { calculLowPrecedenceOperation() }
-        return elementsToCalculate
+        guard let expressionReduced = elementsToCalculate.first,
+            let result = Double(expressionReduced) else { return nil }
+        return result
     }
 
 }

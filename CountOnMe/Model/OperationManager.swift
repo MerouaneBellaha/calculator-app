@@ -39,7 +39,6 @@ struct OperationManager {
             return
         }
         guard !expression.isCorrect else {
-            print(expression)
             currentOperation.append(" \(sign) ")
             return
         }
@@ -61,7 +60,7 @@ struct OperationManager {
     mutating func manageResult() {
         guard calculIsDoable() else { return }
         var calculator = Calculator(elementsToCalculate: expression)
-        guard let unformattedResult = calculator.calcul().first else { return }
+        guard let unformattedResult = calculator.calcul() else { return }
         guard let resultFormatted = format(unformattedResult) else { return }
         currentOperation.append(" = \(resultFormatted)")
     }
@@ -84,11 +83,11 @@ struct OperationManager {
         return true
     }
 
-    private func format(_ number: String) -> String? {
+    private func format(_ number: Double) -> String? {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 3
-        guard let formattedNumber = formatter.number(from: number) else { return nil }
-        guard let result = formatter.string(from: formattedNumber) else { return nil }
+//        if String(number).count > 10 { formatter.numberStyle = .scientific }
+        guard let result = formatter.string(from: number as NSNumber) else { return nil }
         return result
     }
 }

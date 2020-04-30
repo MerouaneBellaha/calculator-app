@@ -18,6 +18,7 @@
 		CB9B3AF7244F2B0300CC5D7F /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B3AF6244F2B0300CC5D7F /* Calculator.swift */; };
 		CBB1C7632443431F006CD281 /* Array+managePrecedence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB1C7622443431F006CD281 /* Array+managePrecedence.swift */; };
 		CBB1C7652443432C006CD281 /* OperationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB1C7642443432C006CD281 /* OperationManager.swift */; };
+		CBD06ABE245B025100354B11 /* CalculatorTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD06ABD245B025100354B11 /* CalculatorTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		CB9B3AF6244F2B0300CC5D7F /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 		CBB1C7622443431F006CD281 /* Array+managePrecedence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+managePrecedence.swift"; sourceTree = "<group>"; };
 		CBB1C7642443432C006CD281 /* OperationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationManager.swift; sourceTree = "<group>"; };
+		CBD06ABD245B025100354B11 /* CalculatorTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorTestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			children = (
 				CB51A79C244CA3AF00B2253C /* Info.plist */,
 				CB51A7A2244CA44700B2253C /* OperationManagerTestCase.swift */,
+				CBD06ABD245B025100354B11 /* CalculatorTestCase.swift */,
 			);
 			path = CountOnMeTests;
 			sourceTree = "<group>";
@@ -137,8 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				CBB1C7642443432C006CD281 /* OperationManager.swift */,
-				CB9B3AF6244F2B0300CC5D7F /* Calculator.swift */,
 				CB4A3BE32451E10900A8202D /* Array+manageExpression.swift */,
+				CB9B3AF6244F2B0300CC5D7F /* Calculator.swift */,
 				CBB1C7622443431F006CD281 /* Array+managePrecedence.swift */,
 			);
 			path = Model;
@@ -290,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB51A7A3244CA44700B2253C /* OperationManagerTestCase.swift in Sources */,
+				CBD06ABE245B025100354B11 /* CalculatorTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

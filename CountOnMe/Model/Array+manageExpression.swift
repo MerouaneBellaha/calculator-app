@@ -14,7 +14,7 @@ extension Array where Element == String {
     }
 
     var isCorrect: Bool {
-        return self.last != "+" && self.last != "-" && self.last != "x" && self.last != "/" && !self.isEmpty
+        return self.last != "+" && self.last != "-" && self.last != "x" && self.last != "/" && self.last?.last != "." && !self.isEmpty
     }
 
     var alreadyCalculated: Bool {
@@ -22,7 +22,7 @@ extension Array where Element == String {
     }
 
     var canAddMinusInFront: Bool {
-        return self.last == "+" || self.last == "x" || self.last == "/" || self.isEmpty
+        return self.last == "+" || self.last == "x" || self.last == "/" || self.isEmpty /*&& self.last?.last != "."*/
     }
 
     var containsDecimal: Bool {
