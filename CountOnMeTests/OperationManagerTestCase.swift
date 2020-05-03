@@ -75,14 +75,18 @@ final class OperationManagerTestCase: XCTestCase {
     func testGivenCurrentOperationHasBeenCalculated_WhenTappingSignButtonDifferentThanMinus_ThenCurrentOperationShouldBeEmpty() {
         for element in ["x", "/", "+"] {
             setExpression(operand: ["5", "14"], sign: ["+"], calculOperation: true)
+
             operationManager.manageOperator(element)
+
             XCTAssertTrue(operationManager.currentOperation.isEmpty)
         }
     }
 
     func testGivenOperationHasBeenCalculated_WhenTappingMinus_ThenCurrentOperationShouldBeMinusSign() {
         setExpression(operand: ["5", "14"], sign: ["+"], calculOperation: true)
+
         operationManager.manageOperator("-")
+
         XCTAssert(expression.count == 1 && expression.last == "-")
     }
     //
@@ -165,4 +169,3 @@ final class OperationManagerTestCase: XCTestCase {
         XCTAssert(expression.last?.count == 5)
     }
 }
-
