@@ -86,7 +86,7 @@ struct OperationManager {
     private func format(_ number: Double) -> String? {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 3
-        if String(number).count > 10 { formatter.numberStyle = .scientific }
+        if String(number).count > 6 { formatter.numberStyle = .scientific }
         guard let result = formatter.string(from: number as NSNumber) else { return nil }
         return result
     }

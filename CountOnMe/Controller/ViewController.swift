@@ -12,6 +12,7 @@ final class ViewController: UIViewController {
 
 // MARK: - @IBOutlet
 
+    @IBOutlet var calculatorButtons: [UIButton]!
     @IBOutlet private weak var textView: UITextView!
 
 // MARK: - Properties
@@ -23,6 +24,12 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         operationManager.delegate = self
+        // must be clean
+        calculatorButtons.forEach { $0.setAppearance() }
+        textView.layer.cornerRadius = 14
+        textView.layer.borderWidth = 4
+        textView.layer.borderColor = #colorLiteral(red: 0.7647058824, green: 0.8392156863, blue: 0.8941176471, alpha: 1)
+        textView.textContainerInset = UIEdgeInsets(top: 12, left: 18, bottom: 12, right: 18)
     }
 
 // MARK: - @IBAction
