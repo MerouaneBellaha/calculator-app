@@ -168,4 +168,20 @@ final class OperationManagerTestCase: XCTestCase {
 
         XCTAssert(expression.last?.count == 5)
     }
+
+    func testGivenOperationsOperandAreGreaterThanNumberMaxLength_WhenCalculate_ThenResultNumberShouldNotBeGreaterthanNumberMaxLength() {
+        setExpression(operand: ["504657888888", "50456"], sign: ["+"], calculOperation: true)
+
+        XCTAssert(expression.last?.contains("E") == true)
+    }
+
+    // MARK: - manageKeepResult
+
+    func testGivenOperationIsCalculated_WhenTappingKeepButton_ThenCurrentOperationIsResultOfTheLastOperation() {
+        setExpression(operand: ["5.1234", "5.1234"], sign: ["+"], calculOperation: true)
+
+        operationManager.manageKeepResult()
+
+        XCTAssertTrue(operationManager.currentOperation == String(format: "%.03f", 5.1234+5.1234))
+    }
 }

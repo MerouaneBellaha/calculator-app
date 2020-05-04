@@ -57,6 +57,15 @@ struct OperationManager {
         currentOperation.append(".")
     }
 
+    mutating func manageKeepResult() {
+        guard expression.alreadyCalculated else {
+            delegate?.didFailWithError(message: "Pas de résultat à garder !")
+            return
+        }
+        currentOperation = expression.last ?? ""
+
+    }
+
     mutating func manageResult() {
         guard calculIsDoable() else { return }
         var calculator = Calculator(elementsToCalculate: expression)
@@ -85,8 +94,9 @@ struct OperationManager {
 
     private func format(_ number: Double) -> String? {
         let formatter = NumberFormatter()
+        let numberMaxLength = 10
         formatter.maximumFractionDigits = 3
-        if String(number).count > 6 { formatter.numberStyle = .scientific }
+        if String(number).count > numberMaxLength { formatter.numberStyle = .scientific }
         guard let result = formatter.string(from: number as NSNumber) else { return nil }
         return result
     }
