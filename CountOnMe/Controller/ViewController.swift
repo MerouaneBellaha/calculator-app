@@ -53,6 +53,10 @@ final class ViewController: UIViewController {
     @IBAction private func tappedDecimalButton(_ sender: UIButton) {
         operationManager.manageDecimal()
     }
+
+    @IBAction func tappedKeepButton(_ sender: UIButton) {
+        operationManager.manageKeepResult()
+    }
 }
 
 // MARK: - OperationManagerDelegate
