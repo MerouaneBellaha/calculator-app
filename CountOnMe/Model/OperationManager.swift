@@ -58,12 +58,12 @@ struct OperationManager {
     }
 
     mutating func manageKeepResult() {
-        guard expression.alreadyCalculated else {
-            delegate?.didFailWithError(message: "Pas de résultat à garder !")
-            return
+        guard expression.alreadyCalculated,
+            let result = expression.last else {
+                delegate?.didFailWithError(message: "Pas de résultat à garder !")
+                return
         }
-        currentOperation = expression.last ?? ""
-
+        currentOperation = result
     }
 
     mutating func manageResult() {

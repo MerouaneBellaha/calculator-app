@@ -184,4 +184,14 @@ final class OperationManagerTestCase: XCTestCase {
 
         XCTAssertTrue(operationManager.currentOperation == String(format: "%.03f", 5.1234+5.1234))
     }
+
+    func testGivenOperationIsNotCalculated_WhenTappingKeepButton_ThenCurrentOperationShouldStayTheSame() {
+        setExpression(operand: ["5", "5"], sign: ["+"])
+
+        let savedExpression = expression
+        operationManager.manageKeepResult()
+
+
+        XCTAssertTrue(expression == savedExpression)
+    }
 }
