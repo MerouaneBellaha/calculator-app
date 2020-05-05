@@ -15,6 +15,7 @@ extension Array where Element == String {
         return false
     }
 
+    /// return true if the array contains "+" or "- "
     var containsLowPrecedenceOperation: Bool {
         if self.contains(where: { $0 == "+" || $0 == "-"}) { return true }
         return false

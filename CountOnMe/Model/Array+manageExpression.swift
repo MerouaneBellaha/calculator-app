@@ -20,20 +20,24 @@ extension Array where Element == String {
         return self.last != "+" && self.last != "-" && self.last != "x" && self.last != "/" && self.last?.last != "." && !self.isEmpty
     }
 
-    ///control if the expression contains sign equal
+    ///return true  if the expression contains sign equal
     var alreadyCalculated: Bool {
         return self.contains("=")
     }
 
+    /// return true if last element is an + x / or array is empty or lf last element is minus operator and array contains at least 2 elements and last element index - 1 is not minus operator
     var canAddMinusInFront: Bool {
         return self.last == "+" || self.last == "x" || self.last == "/" || self.isEmpty || (self.last == "-" && self.count >= 2 && self.reversed()[1] != "-")
     }
 
+    /// return true if last element contains a "."
     var containsDecimal: Bool {
         guard let containsDecimal = self.last?.contains(".") else { return false }
         return containsDecimal
     }
 
+
+    /// return true if expression contains a division by 0
     var containsDivisionByZero: Bool {
         for (index, element) in self.enumerated() where element == "/" && Double(self[index + 1]) == 0 {
             return true
@@ -41,6 +45,7 @@ extension Array where Element == String {
         return false
     }
 
+    /// switch the operator to positive if negative or to negative if positive
     mutating func switchTheOperator(with sign: Character, remove: Bool = false) {
         guard var lastElement = self.last else { return }
         if remove { lastElement.removeFirst() }
