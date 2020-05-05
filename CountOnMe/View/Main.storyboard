@@ -32,7 +32,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="z88-m0-Dur">
                                                 <rect key="frame" x="0.0" y="0.0" width="350" height="78.333333333333329"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9aQ-xs-umm">
+                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9aQ-xs-umm">
                                                         <rect key="frame" x="0.0" y="0.0" width="169" height="78.333333333333329"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="keep" backgroundImage="darkBlueLong">
@@ -48,7 +48,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="J5t-qY-a7z">
                                                         <rect key="frame" x="181" y="0.0" width="169" height="78.333333333333329"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="giJ-0h-lWh">
+                                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="giJ-0h-lWh">
                                                                 <rect key="frame" x="0.0" y="0.0" width="78.666666666666671" height="78.333333333333329"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                                 <state key="normal" title="Ac" backgroundImage="darkBlue">
@@ -61,7 +61,7 @@
                                                                     <action selector="tappedClearButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="Y10-UM-3MD"/>
                                                                 </connections>
                                                             </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qDC-G9-Nbt">
+                                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qDC-G9-Nbt">
                                                                 <rect key="frame" x="90.666666666666686" y="0.0" width="78.333333333333314" height="78.333333333333329"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="qDC-G9-Nbt" secondAttribute="height" multiplier="1:1" id="ppl-RE-bBP"/>
@@ -84,7 +84,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="INw-dP-yn2">
                                                 <rect key="frame" x="0.0" y="90.333333333333314" width="350" height="78.666666666666686"/>
                                                 <subviews>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wLo-xc-lDu">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wLo-xc-lDu">
                                                         <rect key="frame" x="0.0" y="0.0" width="78.666666666666671" height="78.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="7" backgroundImage="white">
@@ -97,7 +97,7 @@
                                                             <action selector="tappedNumberButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="PDV-Mw-rBq"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3t8-ba-WWc">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3t8-ba-WWc">
                                                         <rect key="frame" x="90.666666666666686" y="0.0" width="78.333333333333314" height="78.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="8" backgroundImage="white">
@@ -110,7 +110,7 @@
                                                             <action selector="tappedNumberButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="k7t-Jw-Yfw"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lgy-eM-CbR">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lgy-eM-CbR">
                                                         <rect key="frame" x="181" y="0.0" width="78.666666666666686" height="78.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="9" backgroundImage="white">
@@ -123,7 +123,7 @@
                                                             <action selector="tappedNumberButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="IYm-IT-xqj"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWq-zy-vAH">
+                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWq-zy-vAH">
                                                         <rect key="frame" x="271.66666666666669" y="0.0" width="78.333333333333314" height="78.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="x" backgroundImage="blue">
@@ -141,7 +141,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="P0Q-RJ-WF0">
                                                 <rect key="frame" x="0.0" y="180.99999999999994" width="350" height="78.333333333333314"/>
                                                 <subviews>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcN-kN-P8A">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcN-kN-P8A">
                                                         <rect key="frame" x="0.0" y="0.0" width="78.666666666666671" height="78.333333333333329"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="4" backgroundImage="white">
@@ -154,7 +154,7 @@
                                                             <action selector="tappedNumberButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="l1a-uG-K3o"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0U-Uy-exp">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0U-Uy-exp">
                                                         <rect key="frame" x="90.666666666666686" y="0.0" width="78.333333333333314" height="78.333333333333329"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="5" backgroundImage="white">
@@ -167,7 +167,7 @@
                                                             <action selector="tappedNumberButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="xRe-0F-pHr"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4V-L0-6cF">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4V-L0-6cF">
                                                         <rect key="frame" x="181" y="0.0" width="78.666666666666686" height="78.333333333333329"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="6" backgroundImage="white">
@@ -180,7 +180,7 @@
                                                             <action selector="tappedNumberButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="a5N-Cp-Fam"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sko-I4-ZsI">
+                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sko-I4-ZsI">
                                                         <rect key="frame" x="271.66666666666669" y="0.0" width="78.333333333333314" height="78.333333333333329"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="-" backgroundImage="blue">
@@ -198,7 +198,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Jrd-6O-Ywb">
                                                 <rect key="frame" x="0.0" y="271.33333333333331" width="350" height="78.666666666666686"/>
                                                 <subviews>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="poI-wP-AnK">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="poI-wP-AnK">
                                                         <rect key="frame" x="0.0" y="0.0" width="78.666666666666671" height="78.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="1" backgroundImage="white">
@@ -211,7 +211,7 @@
                                                             <action selector="tappedNumberButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="PXt-bd-ygt"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWC-4j-W4t">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWC-4j-W4t">
                                                         <rect key="frame" x="90.666666666666686" y="0.0" width="78.333333333333314" height="78.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="2" backgroundImage="white">
@@ -224,7 +224,7 @@
                                                             <action selector="tappedNumberButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="ZI0-KD-vyN"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uc3-oJ-Lrz">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uc3-oJ-Lrz">
                                                         <rect key="frame" x="181" y="0.0" width="78.666666666666686" height="78.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="3" backgroundImage="white">
@@ -237,7 +237,7 @@
                                                             <action selector="tappedNumberButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="EHK-RQ-rQf"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UFe-9g-yIw">
+                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UFe-9g-yIw">
                                                         <rect key="frame" x="271.66666666666669" y="0.0" width="78.333333333333314" height="78.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="+" backgroundImage="blue">
@@ -255,7 +255,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="3wn-qa-dFv">
                                                 <rect key="frame" x="0.0" y="361.99999999999994" width="350" height="78.333333333333314"/>
                                                 <subviews>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rbr-VO-g1b">
+                                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rbr-VO-g1b">
                                                         <rect key="frame" x="0.0" y="0.0" width="169" height="78.333333333333329"/>
                                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                         <state key="normal" title="0" backgroundImage="whiteLong">
@@ -271,7 +271,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="eVe-QC-ZoL">
                                                         <rect key="frame" x="181" y="0.0" width="169" height="78.333333333333329"/>
                                                         <subviews>
-                                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hsk-ad-0bp">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hsk-ad-0bp">
                                                                 <rect key="frame" x="0.0" y="0.0" width="78.666666666666671" height="78.333333333333329"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                                 <state key="normal" title="." backgroundImage="white">
@@ -284,7 +284,7 @@
                                                                     <action selector="tappedDecimalButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="kHu-kt-sab"/>
                                                                 </connections>
                                                             </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kc2-mi-OvD">
+                                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kc2-mi-OvD">
                                                                 <rect key="frame" x="90.666666666666686" y="0.0" width="78.333333333333314" height="78.333333333333329"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                                 <state key="normal" title="=" backgroundImage="blue">

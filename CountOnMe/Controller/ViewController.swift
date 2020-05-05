@@ -25,7 +25,7 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         operationManager.delegate = self
         // must be clean
-        calculatorButtons.forEach { $0.setAppearance() }
+        calculatorButtons.forEach { $0.setShadowProperties() }
         textView.layer.cornerRadius = 14
         textView.layer.borderWidth = 4
         textView.layer.borderColor = #colorLiteral(red: 0.7647058824, green: 0.8392156863, blue: 0.8941176471, alpha: 1)
