@@ -34,10 +34,8 @@ struct OperationManager {
     mutating func manageOperator(_ sign: String) {
         if expression.alreadyCalculated { currentOperation.removeAll() }
 
-        if expression.last?.contains(")") == true {
-            continue
-        }
-        if expression.last?.contains("(") == true { currentOperation.append(")")}
+
+        if expression.last?.contains("(") == true && expression.last?.contains(")") == false && expression.last?.last != "-" { currentOperation.append(")")}
 
         guard !(expression.canAddMinusInFront && sign == "-") else {
             currentOperation.append(" (\(sign)")
@@ -85,14 +83,28 @@ struct OperationManager {
         default : expressionToModify.switchTheOperator(with: "-")
         }
         currentOperation = expressionToModify.joined(separator: " ")
+
+
+        //        var expressionToModify = expression
+        //        guard let lastElement = expressionToModify.last else { return }
+        //        switch lastElement.first {
+        //        case "+" : expressionToModify.switchTheOperator(with: "-", remove: true)
+        //        case "-" : expressionToModify.switchTheOperator(with: "+", remove: true)
+        //        default : expressionToModify.switchTheOperator(with: "-")
+        //        }
+        //        currentOperation = expressionToModify.joined(separator: " ")
     }
 
     mutating func manageResult() {
         guard calculIsDoable() else { return }
 
-        if expression.last?.contains("(") == true { currentOperation.append(")")}
+        if expression.last?.contains("(") == true && expression.last?.contains(")") == false { currentOperation.append(")")}
 
-        var calculator = Calculator(elementsToCalculate: expression)
+        let parentheses = CharacterSet.init(charactersIn: "()")
+        let operationWithoutParentesis = currentOperation.components(separatedBy: parentheses).joined(separator: "").split(separator: " ").map { "\($0)" }
+        //        var operationWithotParentesis = operationWithoutParentesis.split(separator: " ").map { "\($0)" }
+
+        var calculator = Calculator(elementsToCalculate: operationWithoutParentesis)
         guard let unformattedResult = calculator.calcul() else { return }
         guard let resultFormatted = format(unformattedResult) else { return }
         currentOperation.append(" = \(resultFormatted)")
