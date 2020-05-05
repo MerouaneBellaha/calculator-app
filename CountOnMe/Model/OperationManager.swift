@@ -66,6 +66,22 @@ struct OperationManager {
         currentOperation = result
     }
 
+    mutating func manageSwitchOperator() {
+        guard expression.isCorrect, !expression.alreadyCalculated else {
+            print(currentOperation)
+            delegate?.didFailWithError(message: "L'élément n'est pas modifiable!")
+            return
+        }
+        var expressionToModify = expression
+        guard let lastElement = expressionToModify.last else { return }
+        switch lastElement.first {
+        case "+" : expressionToModify.switchTheOperator(with: "-", remove: true)
+        case "-" : expressionToModify.switchTheOperator(with: "+", remove: true)
+        default : expressionToModify.switchTheOperator(with: "-")
+        }
+        currentOperation = expressionToModify.joined(separator: " ")
+    }
+
     mutating func manageResult() {
         guard calculIsDoable() else { return }
         var calculator = Calculator(elementsToCalculate: expression)

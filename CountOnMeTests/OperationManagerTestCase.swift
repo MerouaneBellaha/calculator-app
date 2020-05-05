@@ -89,12 +89,34 @@ final class OperationManagerTestCase: XCTestCase {
 
         XCTAssert(expression.count == 1 && expression.last == "-")
     }
-    //
 
     func testGivenCurrentOperationIsEmpty_WhenTappingMinusButtonAndTappingNumberButton5_ThenCurrentOperationShouldBeMinus5() {
         setExpression(operand: ["-5"])
 
         XCTAssert(expression.count == 1 && expression.last == "-5")
+    }
+
+    func testGivenCurrentOperationIsMinus_WhenTappingAnyOperator_ThenCurrentOperationIsTheSame() {
+        operationManager.manageOperator("-")
+
+        for element in ["x", "/", "+", "-"] {
+
+            operationManager.manageOperator(element)
+
+            XCTAssertTrue(operationManager.currentOperation == " -")
+        }
+
+    }
+
+
+    func testGivenCurrentOperationIs5MinusMinus_WhenTappingMinusButton_ThenCurrentOperationShouldBeTheSame() {
+        setExpression(operand: ["5"], sign: ["-"])
+        operationManager.manageOperator("-")
+        let savedCurrentOperation = operationManager.currentOperation
+
+        operationManager.manageOperator("-")
+
+        XCTAssertEqual(savedCurrentOperation, operationManager.currentOperation)
     }
 
     // MARK: - manageClear
@@ -193,5 +215,71 @@ final class OperationManagerTestCase: XCTestCase {
 
 
         XCTAssertTrue(expression == savedExpression)
+    }
+
+    // MARK: - manageSwitchOperator
+
+    func testGivenLastElementOfCurrentOperationIsPositive_WhenTappingSwitchOperatorButton_ThenLastElementOfCurrentOperationIsNegative() {
+        setExpression(operand: ["5", "5"], sign: ["+"])
+
+        operationManager.manageSwitchOperator()
+
+        XCTAssertTrue(expression.last?.first == "-")
+
+    }
+
+    func testGivenOperationIs5Plus5_WhenTappingSwitchOperatorButtonAndTappingEqualButton_ThenResultIs0() {
+        setExpression(operand: ["5", "5"], sign: ["+"])
+
+        operationManager.manageSwitchOperator()
+        operationManager.manageResult()
+
+        XCTAssertTrue(expression.last == "0")
+    }
+
+    func testGivenLastElementOfCurrentOperationIsNegative_WhenTappingSwitchOperatorButton_ThenLastElementOfCurrentOperationIsPositive() {
+        setExpression(operand: ["5", "-5"], sign: ["+"])
+
+        operationManager.manageSwitchOperator()
+
+        XCTAssertTrue(expression.last?.first == "+")
+
+    }
+
+    func testGivenOperationIs5Minus5_WhenTappingSwitchOperatorButtonAndTappingEqualButton_ThenResultIs10() {
+        setExpression(operand: ["5", "5"], sign: ["-"])
+
+        operationManager.manageSwitchOperator()
+        operationManager.manageResult()
+
+        XCTAssertTrue(expression.last == "10")
+    }
+
+    func testGivenLastElementOfCurrentOperationIsNotANumber_WhenTappingSwitchOperatorButton_ThenCurrentOperationShouldStayTheSame() {
+        setExpression(operand: ["5", "5"], sign: ["-", "+"])
+
+        let savedCurrentOperation = operationManager.currentOperation
+        operationManager.manageSwitchOperator()
+        print(operationManager.currentOperation)
+
+        XCTAssertEqual(savedCurrentOperation, operationManager.currentOperation)
+    }
+
+    func testGivenCurrentOperationIs5plus5AndSwitchOperatorHabeBeenTapped_WhenTappingSwitchOperator_ThenCurrentOperationShouldBe5plusplus5() {
+        setExpression(operand: ["5", "5"], sign: ["+"])
+
+         operationManager.manageSwitchOperator()
+         operationManager.manageSwitchOperator()
+
+        XCTAssertEqual("5 + +5", operationManager.currentOperation)
+    }
+
+    func testGivenCurrentOperationIsCalculated_WhenTappingSwitchOperator_ThenResulShouldNotSwitchOperator() {
+        setExpression(operand: ["5", "5"], sign: ["+"], calculOperation: true)
+
+        let savedCurrentOperation = operationManager.currentOperation
+        operationManager.manageSwitchOperator()
+
+        XCTAssertEqual(savedCurrentOperation, operationManager.currentOperation)
     }
 }

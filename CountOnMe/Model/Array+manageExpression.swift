@@ -9,31 +9,47 @@
 import Foundation
 
 extension Array where Element == String {
+
+    ///return true  if the expression contains at least 3 elements
     var haveEnoughElement: Bool {
         return self.count >= 3
     }
 
+    ///return true if the last element of the expression is not an operator or end with a point, and if  the element is not empty
     var isCorrect: Bool {
         return self.last != "+" && self.last != "-" && self.last != "x" && self.last != "/" && self.last?.last != "." && !self.isEmpty
     }
 
+    ///return true  if the expression contains sign equal
     var alreadyCalculated: Bool {
         return self.contains("=")
     }
 
+    /// return true if last element is an + x / or array is empty or lf last element is minus operator and array contains at least 2 elements and last element index - 1 is not minus operator
     var canAddMinusInFront: Bool {
-        return self.last == "+" || self.last == "x" || self.last == "/" || self.isEmpty /*&& self.last?.last != "."*/
+        return self.last == "+" || self.last == "x" || self.last == "/" || self.isEmpty || (self.last == "-" && self.count >= 2 && self.reversed()[1] != "-")
     }
 
+    /// return true if last element contains a "."
     var containsDecimal: Bool {
         guard let containsDecimal = self.last?.contains(".") else { return false }
         return containsDecimal
     }
 
+
+    /// return true if expression contains a division by 0
     var containsDivisionByZero: Bool {
         for (index, element) in self.enumerated() where element == "/" && Double(self[index + 1]) == 0 {
             return true
-       }
+        }
         return false
+    }
+
+    /// switch the operator to positive if negative or to negative if positive
+    mutating func switchTheOperator(with sign: Character, remove: Bool = false) {
+        guard var lastElement = self.last else { return }
+        if remove { lastElement.removeFirst() }
+        lastElement.insert(sign, at: lastElement.startIndex)
+        self[self.count-1] = lastElement
     }
 }

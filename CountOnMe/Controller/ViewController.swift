@@ -57,6 +57,9 @@ final class ViewController: UIViewController {
     @IBAction private func tappedKeepButton(_ sender: UIButton) {
         operationManager.manageKeepResult()
     }
+    @IBAction private func tappedSwitchOperator(_ sender: UIButton) {
+        operationManager.manageSwitchOperator()
+    }
 }
 
 // MARK: - OperationManagerDelegate
