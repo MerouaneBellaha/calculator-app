@@ -32,24 +32,37 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="z88-m0-Dur">
                                                 <rect key="frame" x="0.0" y="0.0" width="350" height="78.333333333333329"/>
                                                 <subviews>
-                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9aQ-xs-umm">
-                                                        <rect key="frame" x="0.0" y="0.0" width="169" height="78.333333333333329"/>
-                                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
-                                                        <state key="normal" title="keep" backgroundImage="darkBlueLong">
-                                                            <color key="titleColor" red="0.99372535939999995" green="0.99383682009999996" blue="0.99366122479999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </state>
-                                                        <state key="highlighted" backgroundImage="whiteLong">
-                                                            <color key="titleColor" red="0.76470588240000004" green="0.83921568629999999" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="tappedKeepButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="a7j-pO-J8X"/>
-                                                        </connections>
-                                                    </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="J5t-qY-a7z">
-                                                        <rect key="frame" x="181" y="0.0" width="169" height="78.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="350" height="78.333333333333329"/>
                                                         <subviews>
-                                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="giJ-0h-lWh">
+                                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2u1-hX-iNT">
                                                                 <rect key="frame" x="0.0" y="0.0" width="78.666666666666671" height="78.333333333333329"/>
+                                                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
+                                                                <state key="normal" title="K" backgroundImage="darkBlue">
+                                                                    <color key="titleColor" red="0.99372535939999995" green="0.99383682009999996" blue="0.99366122479999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <state key="highlighted" backgroundImage="white">
+                                                                    <color key="titleColor" red="0.76470588240000004" green="0.83921568629999999" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="tappedKeepButton:" destination="gQN-VG-LY3" eventType="touchUpInside" id="V8a-NH-xVR"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L04-8G-vDD">
+                                                                <rect key="frame" x="90.666666666666686" y="0.0" width="78.333333333333314" height="78.333333333333329"/>
+                                                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
+                                                                <state key="normal" title="+/-" backgroundImage="darkBlue">
+                                                                    <color key="titleColor" red="0.99372535939999995" green="0.99383682009999996" blue="0.99366122479999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <state key="highlighted" backgroundImage="white">
+                                                                    <color key="titleColor" red="0.76470588240000004" green="0.83921568629999999" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="tappedSwitchOperator:" destination="gQN-VG-LY3" eventType="touchUpInside" id="t5E-i8-gWJ"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="giJ-0h-lWh">
+                                                                <rect key="frame" x="181" y="0.0" width="78.666666666666686" height="78.333333333333329"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="30"/>
                                                                 <state key="normal" title="Ac" backgroundImage="darkBlue">
                                                                     <color key="titleColor" red="0.99372535939999995" green="0.99383682009999996" blue="0.99366122479999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -62,7 +75,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qDC-G9-Nbt">
-                                                                <rect key="frame" x="90.666666666666686" y="0.0" width="78.333333333333314" height="78.333333333333329"/>
+                                                                <rect key="frame" x="271.66666666666669" y="0.0" width="78.333333333333314" height="78.333333333333329"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="qDC-G9-Nbt" secondAttribute="height" multiplier="1:1" id="ppl-RE-bBP"/>
                                                                 </constraints>
@@ -339,8 +352,9 @@
                         <outletCollection property="calculatorButtons" destination="kc2-mi-OvD" collectionClass="NSMutableArray" id="qkC-Sk-pdL"/>
                         <outletCollection property="calculatorButtons" destination="poI-wP-AnK" collectionClass="NSMutableArray" id="b3p-bj-7VN"/>
                         <outletCollection property="calculatorButtons" destination="qDC-G9-Nbt" collectionClass="NSMutableArray" id="ea1-Wg-7v1"/>
-                        <outletCollection property="calculatorButtons" destination="9aQ-xs-umm" collectionClass="NSMutableArray" id="7ce-ZY-5jU"/>
                         <outletCollection property="calculatorButtons" destination="giJ-0h-lWh" collectionClass="NSMutableArray" id="CKO-XX-0Lj"/>
+                        <outletCollection property="calculatorButtons" destination="L04-8G-vDD" collectionClass="NSMutableArray" id="NXQ-MG-kti"/>
+                        <outletCollection property="calculatorButtons" destination="2u1-hX-iNT" collectionClass="NSMutableArray" id="Idu-ly-QXO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hbt-ap-1HP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -352,7 +366,6 @@
         <image name="blue" width="100" height="100"/>
         <image name="blueLong" width="210" height="100"/>
         <image name="darkBlue" width="100" height="100"/>
-        <image name="darkBlueLong" width="210" height="100"/>
         <image name="white" width="100" height="100"/>
         <image name="whiteLong" width="210" height="100"/>
     </resources>
