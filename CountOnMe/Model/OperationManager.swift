@@ -75,7 +75,10 @@ struct OperationManager {
             delegate?.didFailWithError(message: "L'élément n'est pas modifiable!")
             return
         }
-        var expressionToModify = expression
+        
+        var expressionToModify = expression.joined().components(separatedBy: CharacterSet.init(charactersIn: "()")).joined(separator: "").split(separator: " ").map { "\($0)" }
+
+
         guard let lastElement = expressionToModify.last else { return }
         switch lastElement.first {
         case "+" : expressionToModify.switchTheOperator(with: "-", remove: true)
