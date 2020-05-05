@@ -1,4 +1,4 @@
 Work in Progress
 
 
-![](/appArchitecture\ –\ 1.png)
+![](/appArchitecture(\ )–(\ )1.png)
