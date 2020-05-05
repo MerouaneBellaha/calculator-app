@@ -50,6 +50,8 @@ extension Array where Element == String {
         guard var lastElement = self.last else { return }
         if remove { lastElement.removeFirst() }
         lastElement.insert(sign, at: lastElement.startIndex)
-        self[self.count-1] = lastElement
+
+//        self[self.count-1] = lastElement
+        self[self.count-1] = "(\(lastElement))"
     }
 }

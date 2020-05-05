@@ -34,8 +34,13 @@ struct OperationManager {
     mutating func manageOperator(_ sign: String) {
         if expression.alreadyCalculated { currentOperation.removeAll() }
 
+        if expression.last?.contains(")") == true {
+            continue
+        }
+        if expression.last?.contains("(") == true { currentOperation.append(")")}
+
         guard !(expression.canAddMinusInFront && sign == "-") else {
-            currentOperation.append(" \(sign)")
+            currentOperation.append(" (\(sign)")
             return
         }
         guard !expression.isCorrect else {
@@ -84,6 +89,9 @@ struct OperationManager {
 
     mutating func manageResult() {
         guard calculIsDoable() else { return }
+
+        if expression.last?.contains("(") == true { currentOperation.append(")")}
+
         var calculator = Calculator(elementsToCalculate: expression)
         guard let unformattedResult = calculator.calcul() else { return }
         guard let resultFormatted = format(unformattedResult) else { return }
