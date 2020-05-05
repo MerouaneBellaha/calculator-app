@@ -1,4 +1,4 @@
 Work in Progress
 
 
-![](/appArchitecture.png)
+![](/appArchitecture – 1.png)
