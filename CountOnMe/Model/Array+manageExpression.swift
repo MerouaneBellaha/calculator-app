@@ -31,9 +31,10 @@ extension Array where Element == String {
     }
 
     /// return true if last element contains a "."
-    var containsDecimal: Bool {
-        guard let containsDecimal = self.last?.contains(".") else { return false }
-        return containsDecimal
+    var containsDecimal: Bool { // CHANGE THIS IN MASTER IF DONT KEEP THIS BRANCH
+        return self.last?.contains(".") == true
+//        guard let containsDecimal = self.last?.contains(".") else { return false }
+//        return containsDecimal
     }
 
 
@@ -45,17 +46,16 @@ extension Array where Element == String {
         return false
     }
 
+    /// return true if  last element contains an open parenthese and parenthese is not close and the last character it not "-" or "."
+    var shouldCloseParenthesis: Bool {
+        return self.last?.contains("(") == true && self.last?.contains(")") == false && self.last?.last != "-" && self.last?.last != "."
+    }
+
     /// switch the operator to positive if negative or to negative if positive
     mutating func switchTheOperator(with sign: Character, remove: Bool = false) {
-
-
         guard var lastElement = self.last else { return }
-
-        
         if remove { lastElement.remove(at: lastElement.startIndex) }
         lastElement.insert(sign, at: lastElement.startIndex)
-
-//        self[self.count-1] = lastElement
         self[self.count-1] = "(\(lastElement))"
     }
 }

@@ -24,7 +24,7 @@ extension UIButton {
 //            })
         }
         didSet {
-            UIView.transition(with: self, duration: 0.2, options: .transitionCrossDissolve, animations: {
+            UIView.transition(with: self, duration: 0.3, options: .transitionCrossDissolve, animations: {
                 self.setButtonBackgroundColor(tag: self.tag, isHighlighted: false)
             })
         }

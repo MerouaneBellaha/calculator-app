@@ -49,9 +49,6 @@ struct Calculator {
     }
 
     mutating func calcul() -> Double? {
-
-
-
         if elementsToCalculate.containsHighPrecedenceOperation { calculHighPrecedenceOperation() }
         if elementsToCalculate.containsLowPrecedenceOperation { calculLowPrecedenceOperation() }
         guard let expressionReduced = elementsToCalculate.first,

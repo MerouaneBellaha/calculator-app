@@ -26,17 +26,23 @@ struct OperationManager {
         return currentOperation.split(separator: " ").map { "\($0)" }
     }
 
+    private var expressionWithoutParentheses: [String] {
+        let parentheses = CharacterSet.init(charactersIn: "()")
+        return currentOperation.components(separatedBy: parentheses).joined(separator: "").split(separator: " ").map { "\($0)" }
+    }
+
     mutating func manageNumber(_ number: String) {
         if expression.alreadyCalculated { currentOperation.removeAll() }
+        guard currentOperation.last != ")" else {
+            delegate?.didFailWithError(message: "Impossible d'ajouter un chiffre !")
+            return
+        }
         currentOperation.append(number)
     }
 
     mutating func manageOperator(_ sign: String) {
         if expression.alreadyCalculated { currentOperation.removeAll() }
-
-
-        if expression.last?.contains("(") == true && expression.last?.contains(")") == false && expression.last?.last != "-" { currentOperation.append(")")}
-
+        if expression.shouldCloseParenthesis { currentOperation.append(")") }
         guard !(expression.canAddMinusInFront && sign == "-") else {
             currentOperation.append(" (\(sign)")
             return
@@ -53,7 +59,7 @@ struct OperationManager {
     }
 
     mutating func manageDecimal() {
-        guard expression.isCorrect && !expression.containsDecimal && !expression.alreadyCalculated else {
+        guard expression.isCorrect && !expression.containsDecimal && !expression.alreadyCalculated  && currentOperation.last != ")" else {
             delegate?.didFailWithError(message: "Impossible d'ajouter un point !")
             return
         }
@@ -71,13 +77,10 @@ struct OperationManager {
 
     mutating func manageSwitchOperator() {
         guard expression.isCorrect, !expression.alreadyCalculated else {
-            print(currentOperation)
             delegate?.didFailWithError(message: "L'élément n'est pas modifiable!")
             return
         }
-        
-        var expressionToModify = expression.joined().components(separatedBy: CharacterSet.init(charactersIn: "()")).joined(separator: "").split(separator: " ").map { "\($0)" }
-
+        var expressionToModify = expressionWithoutParentheses
 
         guard let lastElement = expressionToModify.last else { return }
         switch lastElement.first {
@@ -86,46 +89,31 @@ struct OperationManager {
         default : expressionToModify.switchTheOperator(with: "-")
         }
         currentOperation = expressionToModify.joined(separator: " ")
-
-
-        //        var expressionToModify = expression
-        //        guard let lastElement = expressionToModify.last else { return }
-        //        switch lastElement.first {
-        //        case "+" : expressionToModify.switchTheOperator(with: "-", remove: true)
-        //        case "-" : expressionToModify.switchTheOperator(with: "+", remove: true)
-        //        default : expressionToModify.switchTheOperator(with: "-")
-        //        }
-        //        currentOperation = expressionToModify.joined(separator: " ")
     }
 
     mutating func manageResult() {
         guard calculIsDoable() else { return }
-
-        if expression.last?.contains("(") == true && expression.last?.contains(")") == false { currentOperation.append(")")}
-
-        let parentheses = CharacterSet.init(charactersIn: "()")
-        let operationWithoutParentesis = currentOperation.components(separatedBy: parentheses).joined(separator: "").split(separator: " ").map { "\($0)" }
-        //        var operationWithotParentesis = operationWithoutParentesis.split(separator: " ").map { "\($0)" }
-
-        var calculator = Calculator(elementsToCalculate: operationWithoutParentesis)
+        if expression.shouldCloseParenthesis { currentOperation.append(")") }
+        var calculator = Calculator(elementsToCalculate: expressionWithoutParentheses)
         guard let unformattedResult = calculator.calcul() else { return }
         guard let resultFormatted = format(unformattedResult) else { return }
         currentOperation.append(" = \(resultFormatted)")
     }
 
     private mutating func calculIsDoable() -> Bool {
+        // separate this guard to display right error message depending of the situation
         guard expression.haveEnoughElement,
             !expression.alreadyCalculated  else {
                 delegate?.didFailWithError(message: "Démarrez un nouveau calcul !")
                 return false
         }
         guard expression.isCorrect else {
-            delegate?.didFailWithError(message: "Un operateur est déja mis !")
+            delegate?.didFailWithError(message: "L'expression n'est pas correcte !")
             return false
         }
         guard !expression.containsDivisionByZero else {
             currentOperation.append(" = Error")
-            delegate?.didFailWithError(message: "Division par zéro impossible")
+            delegate?.didFailWithError(message: "Division par zéro impossible !")
             return false
         }
         return true
