@@ -22,6 +22,7 @@ struct OperationManager {
             delegate?.didUpdateOperation(with: currentOperation)
         }
     }
+
     private var expression: [String] {
         return currentOperation.split(separator: " ").map { "\($0)" }
     }
