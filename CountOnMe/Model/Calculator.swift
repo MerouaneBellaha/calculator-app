@@ -52,7 +52,7 @@ struct Calculator {
         if elementsToCalculate.containsHighPrecedenceOperation { calculHighPrecedenceOperation() }
         if elementsToCalculate.containsLowPrecedenceOperation { calculLowPrecedenceOperation() }
         guard let expressionReduced = elementsToCalculate.first,
-            let result = Double(expressionReduced) else { return nil }
+        let result = Double(expressionReduced) else { return nil }
         return result
     }
 

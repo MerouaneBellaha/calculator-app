@@ -22,20 +22,25 @@ struct OperationManager {
             delegate?.didUpdateOperation(with: currentOperation)
         }
     }
+
     private var expression: [String] {
         return currentOperation.split(separator: " ").map { "\($0)" }
     }
 
     mutating func manageNumber(_ number: String) {
         if expression.alreadyCalculated { currentOperation.removeAll() }
+        guard currentOperation.last != ")" else {
+            delegate?.didFailWithError(message: "Impossible d'ajouter un chiffre !")
+            return
+        }
         currentOperation.append(number)
     }
 
     mutating func manageOperator(_ sign: String) {
         if expression.alreadyCalculated { currentOperation.removeAll() }
-
+        if expression.shouldCloseParenthesis { currentOperation.append(")") }
         guard !(expression.canAddMinusInFront && sign == "-") else {
-            currentOperation.append(" \(sign)")
+            currentOperation.append(" (\(sign)")
             return
         }
         guard !expression.isCorrect else {
@@ -50,7 +55,7 @@ struct OperationManager {
     }
 
     mutating func manageDecimal() {
-        guard expression.isCorrect && !expression.containsDecimal && !expression.alreadyCalculated else {
+        guard expression.isCorrect && !expression.containsDecimal && !expression.alreadyCalculated  && currentOperation.last != ")" else {
             delegate?.didFailWithError(message: "Impossible d'ajouter un point !")
             return
         }
@@ -68,11 +73,14 @@ struct OperationManager {
 
     mutating func manageSwitchOperator() {
         guard expression.isCorrect, !expression.alreadyCalculated else {
-            print(currentOperation)
             delegate?.didFailWithError(message: "L'élément n'est pas modifiable!")
             return
         }
+
         var expressionToModify = expression
+        let lastElementWithOutParentheses = expressionToModify.reversed()[0].replacingOccurrences(of: "[()]", with: "", options: .regularExpression)
+        expressionToModify[expressionToModify.count - 1] = lastElementWithOutParentheses
+
         guard let lastElement = expressionToModify.last else { return }
         switch lastElement.first {
         case "+" : expressionToModify.switchTheOperator(with: "-", remove: true)
@@ -84,25 +92,34 @@ struct OperationManager {
 
     mutating func manageResult() {
         guard calculIsDoable() else { return }
-        var calculator = Calculator(elementsToCalculate: expression)
+        if expression.shouldCloseParenthesis { currentOperation.append(")") }
+
+        let parentheses = CharacterSet.init(charactersIn: "()")
+        let expressionWithoutParentheses = currentOperation.components(separatedBy: parentheses).joined(separator: "")
+            .split(separator: " ").map { "\($0)" }
+
+        var calculator = Calculator(elementsToCalculate: expressionWithoutParentheses)
         guard let unformattedResult = calculator.calcul() else { return }
         guard let resultFormatted = format(unformattedResult) else { return }
         currentOperation.append(" = \(resultFormatted)")
     }
 
     private mutating func calculIsDoable() -> Bool {
-        guard expression.haveEnoughElement,
-            !expression.alreadyCalculated  else {
-                delegate?.didFailWithError(message: "Démarrez un nouveau calcul !")
+        guard expression.haveEnoughElement else {
+                delegate?.didFailWithError(message: "Pas assez d'éléments pour calculer !")
                 return false
         }
+        guard !expression.alreadyCalculated else {
+            delegate?.didFailWithError(message: "Démarrez un nouveau calcul !")
+           return false
+        }
         guard expression.isCorrect else {
-            delegate?.didFailWithError(message: "Un operateur est déja mis !")
+            delegate?.didFailWithError(message: "L'expression n'est pas correcte !")
             return false
         }
         guard !expression.containsDivisionByZero else {
             currentOperation.append(" = Error")
-            delegate?.didFailWithError(message: "Division par zéro impossible")
+            delegate?.didFailWithError(message: "Division par zéro impossible !")
             return false
         }
         return true

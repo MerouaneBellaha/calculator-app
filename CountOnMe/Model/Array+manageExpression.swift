@@ -17,7 +17,7 @@ extension Array where Element == String {
 
     ///return true if the last element of the expression is not an operator or end with a point, and if  the element is not empty
     var isCorrect: Bool {
-        return self.last != "+" && self.last != "-" && self.last != "x" && self.last != "/" && self.last?.last != "." && !self.isEmpty
+        return self.last != "+" && self.last != "-" && self.last != "x" && self.last != "/" && self.last?.last != "." && !self.isEmpty && self.last != "(-"
     }
 
     ///return true  if the expression contains sign equal
@@ -32,8 +32,7 @@ extension Array where Element == String {
 
     /// return true if last element contains a "."
     var containsDecimal: Bool {
-        guard let containsDecimal = self.last?.contains(".") else { return false }
-        return containsDecimal
+        return self.last?.contains(".") == true
     }
 
 
@@ -45,11 +44,16 @@ extension Array where Element == String {
         return false
     }
 
+    /// return true if  last element contains an open parenthese and parenthese is not close and the last character it not "-" or "."
+    var shouldCloseParenthesis: Bool {
+        return self.last?.contains("(") == true && self.last?.contains(")") == false && self.last?.last != "-" && self.last?.last != "."
+    }
+
     /// switch the operator to positive if negative or to negative if positive
     mutating func switchTheOperator(with sign: Character, remove: Bool = false) {
         guard var lastElement = self.last else { return }
-        if remove { lastElement.removeFirst() }
+        if remove { lastElement.remove(at: lastElement.startIndex) }
         lastElement.insert(sign, at: lastElement.startIndex)
-        self[self.count-1] = lastElement
+        self[self.count-1] = "(\(lastElement))"
     }
 }

@@ -24,7 +24,7 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         operationManager.delegate = self
-        // must be clean
+
         calculatorButtons.forEach { $0.setShadowProperties() }
         textView.layer.cornerRadius = 14
         textView.layer.borderWidth = 4

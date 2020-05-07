@@ -55,5 +55,4 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(calculator.calcul(), 2+((4*3)/6))
         XCTAssertNotEqual(calculator.calcul(), ((2+4)*3)/6)
     }
-
 }
