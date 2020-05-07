@@ -27,11 +27,6 @@ struct OperationManager {
         return currentOperation.split(separator: " ").map { "\($0)" }
     }
 
-    private var expressionWithoutParentheses: [String] {
-        let parentheses = CharacterSet.init(charactersIn: "()")
-        return currentOperation.components(separatedBy: parentheses).joined(separator: "").split(separator: " ").map { "\($0)" }
-    }
-
     mutating func manageNumber(_ number: String) {
         if expression.alreadyCalculated { currentOperation.removeAll() }
         guard currentOperation.last != ")" else {
@@ -98,6 +93,11 @@ struct OperationManager {
     mutating func manageResult() {
         guard calculIsDoable() else { return }
         if expression.shouldCloseParenthesis { currentOperation.append(")") }
+
+        let parentheses = CharacterSet.init(charactersIn: "()")
+        let expressionWithoutParentheses = currentOperation.components(separatedBy: parentheses).joined(separator: "")
+            .split(separator: " ").map { "\($0)" }
+
         var calculator = Calculator(elementsToCalculate: expressionWithoutParentheses)
         guard let unformattedResult = calculator.calcul() else { return }
         guard let resultFormatted = format(unformattedResult) else { return }
@@ -105,11 +105,13 @@ struct OperationManager {
     }
 
     private mutating func calculIsDoable() -> Bool {
-        // separate this guard to display right error message depending of the situation
-        guard expression.haveEnoughElement,
-            !expression.alreadyCalculated  else {
-                delegate?.didFailWithError(message: "Démarrez un nouveau calcul !")
+        guard expression.haveEnoughElement else {
+                delegate?.didFailWithError(message: "Pas assez d'éléments pour calculer !")
                 return false
+        }
+        guard !expression.alreadyCalculated else {
+            delegate?.didFailWithError(message: "Démarrez un nouveau calcul !")
+           return false
         }
         guard expression.isCorrect else {
             delegate?.didFailWithError(message: "L'expression n'est pas correcte !")

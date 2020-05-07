@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIButton {
-    // add fade effect
+
     func setShadowProperties() {
         layer.shadowRadius = 11
         layer.shadowOpacity = 0.7
@@ -19,9 +19,7 @@ extension UIButton {
 
     open override var isHighlighted: Bool {
         willSet {
-//            UIView.transition(with: self, duration: 0.7, options: .transitionCrossDissolve, animations: {
                 self.setButtonBackgroundColor(tag: self.tag, isHighlighted: true)
-//            })
         }
         didSet {
             UIView.transition(with: self, duration: 0.3, options: .transitionCrossDissolve, animations: {
@@ -32,13 +30,12 @@ extension UIButton {
 
     func setButtonBackgroundColor( tag: Int, isHighlighted: Bool) {
         var colors = [String]()
-        let (blue, white, darkBlue, whiteLong, blueLong, darkBlueLong) = ("blue", "white", "darkBlue", "whiteLong", "blueLong", "darkBlueLong")
+        let (blue, white, darkBlue, whiteLong, blueLong) = ("blue", "white", "darkBlue", "whiteLong", "blueLong")
         switch tag {
         case 0: colors.append(contentsOf: [blue, white])
         case 1: colors.append(contentsOf: [white, blue])
         case 2: colors.append(contentsOf: [white, darkBlue])
-        case 3: colors.append(contentsOf: [whiteLong, darkBlueLong])
-        case 4: colors.append(contentsOf: [blueLong, whiteLong])
+        case 3: colors.append(contentsOf: [blueLong, whiteLong])
         default: break
         }
         setBackgroundImage(UIImage(named: isHighlighted ? colors[0] : colors[1]), for: .normal)

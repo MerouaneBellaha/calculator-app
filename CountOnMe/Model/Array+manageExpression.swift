@@ -31,10 +31,8 @@ extension Array where Element == String {
     }
 
     /// return true if last element contains a "."
-    var containsDecimal: Bool { // CHANGE THIS IN MASTER IF DONT KEEP THIS BRANCH
+    var containsDecimal: Bool {
         return self.last?.contains(".") == true
-//        guard let containsDecimal = self.last?.contains(".") else { return false }
-//        return containsDecimal
     }
 
 
