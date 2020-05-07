@@ -363,10 +363,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="blue" width="142" height="142"/>
-        <image name="blueLong" width="252" height="142"/>
-        <image name="darkBlue" width="142" height="142"/>
-        <image name="white" width="142" height="142"/>
-        <image name="whiteLong" width="252" height="142"/>
+        <image name="blue" width="100" height="100"/>
+        <image name="blueLong" width="210" height="100"/>
+        <image name="darkBlue" width="100" height="100"/>
+        <image name="white" width="100" height="100"/>
+        <image name="whiteLong" width="210" height="100"/>
     </resources>
 </document>
