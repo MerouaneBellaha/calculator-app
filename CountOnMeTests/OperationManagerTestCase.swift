@@ -40,7 +40,6 @@ final class OperationManagerTestCase: XCTestCase {
     }
 
     private var expression: [String] {
-//        return operationManager.currentOperation.trimmingCharacters(in: .whitespaces).components(separatedBy: " ") // ??
         return operationManager.currentOperation.split(separator: " ").map { String($0) }
     }
 

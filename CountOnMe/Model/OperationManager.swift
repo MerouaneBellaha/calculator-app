@@ -80,7 +80,10 @@ struct OperationManager {
             delegate?.didFailWithError(message: "L'élément n'est pas modifiable!")
             return
         }
-        var expressionToModify = expressionWithoutParentheses
+
+        var expressionToModify = expression
+        let lastElementWithOutParentheses = expressionToModify.reversed()[0].replacingOccurrences(of: "[()]", with: "", options: .regularExpression)
+        expressionToModify[expressionToModify.count - 1] = lastElementWithOutParentheses
 
         guard let lastElement = expressionToModify.last else { return }
         switch lastElement.first {
