@@ -15,6 +15,8 @@ protocol OperationManagerDelegate: class {
 
 struct OperationManager {
 
+    // MARK: - Properties
+
     weak var delegate: OperationManagerDelegate?
 
     var currentOperation: String = "" {
@@ -26,6 +28,8 @@ struct OperationManager {
     private var expression: [String] {
         return currentOperation.split(separator: " ").map { "\($0)" }
     }
+
+    // MARK: - manageButton Methods
 
     mutating func manageNumber(_ number: String) {
         if expression.alreadyCalculated { currentOperation.removeAll() }
