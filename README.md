@@ -2,3 +2,4 @@
 
 
 ![](/appArchitecture.png)
+![](/addedFuncpng.png)
